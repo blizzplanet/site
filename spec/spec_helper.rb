@@ -26,4 +26,5 @@ RSpec.configure do |config|
   # examples within a transaction, comment the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  config.fixture_path = "#{Rails.root}/spec/fixtures"
 end
