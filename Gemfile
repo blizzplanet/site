@@ -14,7 +14,7 @@ gem 'thin'
 # gem 'ruby-debug'
 
 gem "haml", "3.0.18"
-
+gem 'formtastic', '~> 1.1.0'
 # gem "restful-authentication", :git => "git://github.com/Satish/restful-authentication.git", :branch => "rails3"
 
 group :test do

@@ -1,9 +1,7 @@
 # TODO: write a normal spec set for people
 
 module Traits::Model::RestfulAuthentication
-  extend ::ActiveSupport::Concern
-
-  included do |base|
+  def self.included(base)
     base.class_eval do
       validates :login, :presence   => true,
                         :uniqueness => true,
