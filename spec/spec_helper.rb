@@ -4,7 +4,7 @@ require 'spork'
 ENV["RAILS_ENV"] ||= 'test'
 
 Spork.prefork do
-  require File.expand_path("../../config/application", __FILE__)  
+  require File.expand_path("../../config/application", __FILE__)
   Spork.trap_method(Bru::Application, :reload_routes!)
   Spork.trap_method(Bru::Application, :eager_load!)
   require File.expand_path("../../config/environment", __FILE__)
@@ -26,5 +26,4 @@ RSpec.configure do |config|
   # examples within a transaction, comment the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
-  config.fixture_path = "#{Rails.root}/spec/fixtures"
 end

@@ -1,0 +1,43 @@
+$static: "/images"
+$padding: 15
+
+@mixin rounded_side($side, $radius)
+  -moz-border-radius-top#{$side}: $radius
+  -webkit-top-#{$side}-radius: $radius $radius
+  border-top-#{$side}-radius: $radius $radius
+  -moz-border-radius-bottom#{$side}: $radius
+  -webkit-bottom-#{$side}-radius: $radius $radius
+  border-bottom-#{$side}-radius: $radius $radius
+
+
+@mixin rounded($radius: 5px)
+  @include rounded_side(left, $radius)
+  @include rounded_side(right, $radius)
+
+@mixin default_colors
+  /* background: #0a1d22 */
+  background-image: url("#{$static}/bg_transparent.png")
+  border-color: #0f2127
+  color: #e5b122
+
+@mixin default_border
+  border-width: 1px
+  border-style: solid
+
+@mixin default_metrics
+  margin-bottom: 13px
+  padding: #{$padding}px
+
+@mixin default_item
+  @include rounded
+  @include default_border
+  @include default_colors
+  @include default_metrics
+
+@mixin header
+  text-transform: uppercase
+  font-weight: bold
+
+@mixin column
+/*  padding-bottom: 10000px */
+/*  margin-bottom: -10000px */

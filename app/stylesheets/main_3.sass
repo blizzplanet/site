@@ -1,0 +1,66 @@
+@import _shared
+$static: "/images"
+
+html
+  background-image: url("#{$static}/header_3.jpg")
+#header
+/*  .game-picker
+    .arrow.left
+      background: url("#{$static}/game_picker_arrow_left_green.png")
+    .arrow.right
+      background: url("#{$static}/game_picker_arrow_right_green.png")
+    .games
+      background: url("#{$static}/bg_transparent_2.png")
+      border-color: #1aff8e - #888
+      ul
+        li
+          a
+            color: #1a8eff + #555*/
+#left
+  .item
+    .toggler
+      background: url("#{$static}/menu_toggler_blue.png")
+    &.toggled
+      .toggler
+        background: url("#{$static}/menu_toggler_show_blue.png")
+  .item.hot
+    display: none
+  .item.active
+    width: 145px - 34px
+    @include rounded
+    color: #1a8eff
+    ul
+      li
+        a
+          color: #1a8eff
+      li
+        &:before
+          content: url("#{$static}/list-arrow-blue.png")
+      ul
+        li
+          a
+            color: #1a8eff
+      li.selected
+        background: #1a8eff - #446
+        @include rounded(3px)
+  margin-right: 15px
+
+
+#content
+  width: 549px - 34px
+  margin-left: 0
+  .article
+    .header
+      .date
+        background-color: #1a8eff * 0.25
+        background: transparent
+        border: 1px solid #1f3034/*#1a8eff * 0.25 + #050505*/
+        margin-top: -16px
+        margin-right: 0px
+  .separator
+    width: 495px
+
+#right
+  margin-left: 15px
+  .tags
+    display: none

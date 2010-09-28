@@ -1,0 +1,349 @@
+@import _shared
+*
+  padding: 0
+  margin: 0
+
+.clear
+  clear: both
+
+.icon
+  padding: 2px 0 6px 0
+  width: 60px
+  height: 36px
+  content: "."
+  &.diablo
+    background: url("#{$static}/news-icon-diablo.png") no-repeat
+  &.starcraft
+    background: url("#{$static}/news-icon-starcraft.png") no-repeat
+  &.blizzard
+    background: url("#{$static}/news-icon-blizzard.png") no-repeat
+html
+  background: url("#{$static}/header.jpg")
+  background-color: #000
+  background-position: center top
+  background-repeat: no-repeat
+
+#wrapper
+  width: 970px
+  margin: 0 auto
+  font-size: 12px
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif
+
+a
+  color: #ffffff
+  &.interactive
+    text-decoration: none
+    border-bottom: 1px dashed
+
+#header
+  height: 266px
+  margin: 25px 0 0 0
+  .logo
+    float: left
+  .game-picker
+    float: right
+    height: 50px
+    .arrow
+      width: 23px
+      height: 50px
+      float: left
+      &.left
+        background: url("#{$static}/game_picker_arrow_left.png")
+      &.right
+        background: url("#{$static}/game_picker_arrow_right.png")
+    .games
+      @include rounded(4px)
+      @include default_colors
+      @include default_border
+      float: left
+      height: 52px - 12px
+      padding: 5px
+      margin: 0px 5px
+      width: 450 - 12px
+      ul
+        display: block
+        list-style-type: none
+        li
+          display: block
+          float: left
+          vertical-align: middle
+          margin-left: 20px
+          line-height: 40px
+          a
+            color: #e5b122
+#columns
+  overflow: hidden
+
+#left
+  @include column
+  float: left
+  .item
+    @include default_item
+
+    padding: 20px 17px
+    width: 145px - 34px
+
+    .toggler
+      float: right
+      width: 21px
+      height: 17px
+      margin-right: -18px
+      margin-top: -21px
+      background: url("#{$static}/menu_toggler.png")
+    &.toggled
+      .toggler
+        background: url("#{$static}/menu_toggler_show.png")
+
+
+    h4
+      @include header
+      color: #1a8eff
+      font-size: 14px
+
+    ul
+      margin-top: 15px
+      li
+        list-style-type: none
+        margin-bottom: 5px
+    &.banner
+      @include rounded_side(left, 0px)
+      @include rounded_side(right, 0px)
+      color: #b0b0b0
+      font-weight: bold
+      text-transform: uppercase
+      text-align: center
+      height: 300px
+      width: 145px      
+      padding: 0
+
+    &.hot
+      background-image: url("#{$static}/bg_hot_transparent.png")
+      border-color: #e5b122
+      .toggler
+        background: url("#{$static}/menu_hot_toggler.png")
+      &.toggled
+        .toggler
+          background: url("#{$static}/menu_hot_toggler_show.png")        
+      h4
+        @include header
+        color: #fec833
+
+    &.active
+      @include rounded_side(right, 0px)
+      z-index: 10
+      position: relative
+      width: 169px - 34px
+      border-right: 1px solid rgba(10, 29, 34, 0.7)
+
+      h4
+        color: #fec833
+      ul
+        list-style-type: none
+        list-style-position: inside
+        li
+          padding-left: 9px
+          &:before
+            content: url("#{$static}/list-arrow.png")
+            margin-right: 3px
+        li.nested
+          padding: 0
+          &:before
+            display: none
+        li.selected
+          padding-left: 18px
+          background: transparent
+          background-image: url("#{$static}/menu-arrow-right.png")
+          background-repeat: no-repeat
+
+          padding-top: 5px
+          padding-bottom: 5px
+          border-right: 0
+
+          color: #FFFFFF
+          &:before
+            display: none
+
+        ul
+          list-style-image: none
+          margin-top: 0
+          margin-left: 28px
+          li
+            padding-left: 0
+            &:before
+              display: none
+            a
+              color: inherit
+
+#content
+  @include default_item
+  @include column
+  color: #FFFFFF
+
+  float: left
+  min-height: 600px
+  width: 544px - 54px
+  padding-left: 23px
+  padding-right: 23px
+  padding-top: 23px
+  margin-left: -1px
+  z-index: 1
+  position: relative
+
+  font-size: 14px
+
+  h3
+    @include header
+    font-size: 24px
+    color: #fec833
+    padding-bottom: 15px
+    
+  .article
+    padding: 15px 0
+    .header
+      margin-bottom: 10px
+      h2
+        /*float: left
+        font-size: 16px
+        padding-right: 10px
+        max-width: 350px - 20px
+        display: table-cell
+        vertical-align: middle
+        height: 36px
+        .tr
+          position: relative
+        a
+      .icon
+        float: left
+        margin-right: 12px
+      .date
+        float: right
+        background-color: #1a8eff
+        text-align: center
+        min-width: 50px
+        padding: 8px
+        margin-right: -23px
+        margin-top: -16px
+        .number
+          font-size: 20px
+          font-weight: bold
+        .month
+          margin-top: -4px
+          font-size: 10px
+    p
+      padding-bottom: 15px
+      line-height: 1.3
+      a
+        color: #5faffd
+      a.cut
+        color: #ffffff
+      &.quote
+        @include default_border
+        @include default_colors
+        @include default_metrics
+        font-style: italic
+        color: #9bceff
+        border-color: #213136
+        strong, b
+          font-style: normal
+          color: #ffffff
+    .author
+      float: left
+      font-size: 10px
+      a
+        font-size: 12px
+    a.comments
+      float: right
+      font-size: 12px
+    .footer
+      margin-top: 15px
+  .separator
+    border-top: 1px solid #1f3034
+    width: 475px
+
+#right
+  @include column
+  float: left
+  width: 225px - 32px
+  margin-left: 25px
+  .item
+    @include default_item
+    width: 225px - 32px
+
+    h4
+      @include header
+      color: #1987f2
+      font-size: 14px
+
+    &.search
+      width: 225px - 16px
+      padding-right: 0
+    form.search
+      input[type=text]
+        width: 170px - 8px
+        height: 20px
+        float: left
+        border: 2px inset #AAA
+        padding: 0px 4px
+      input[type=image]
+        height: 20px
+        margin-top: 1px
+        margin-left: 5px
+        float: left
+
+    &.login
+      text-transform: uppercase
+      font-size: 14px
+      font-weight: bold
+      color: #b0b0b0
+    &.articles
+      .article
+        float: left
+        clear: left
+        color: #FFFFFF
+        margin: 5px 0 15px 0
+    &.tags
+      color: #FFF
+      .tags
+        margin-top: 5px
+      span
+        padding: 0 3px
+      .size-1
+        font-size: 10px
+      .size-2
+        font-size: 11px
+      .size-3
+        font-size: 12px
+      .size-4
+        font-size: 14px
+      .size-5
+        font-size: 16px
+      .size-6
+        font-size: 18px
+      .size-7
+        font-size: 30px
+
+#footer
+  clear: both
+  border-top: 1px solid #171717
+  padding-top: 30px
+  padding-left: 15px
+  color: #9e9e9e - #222
+  height: 150px
+  font-size: 11px
+  a
+    color: #9e9e9e - #222
+  img
+    float: left
+  .copyright
+    float: left
+    margin-left: 20px
+    a
+      color: #e3ac05 - #222
+  ul
+    float: left
+    margin-left: 85px
+    color: #e3ac05 - #222
+    list-style-type: none
+    display: block
+    li
+      padding: 2px 0
