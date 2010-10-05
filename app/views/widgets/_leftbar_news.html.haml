@@ -1,6 +1,6 @@
 %h4 Новости
 %ul
-  %li{:class => selected_class(!@categories.blank?, "selected")}
+  %li{:class => selected_class(!@category.blank? && @category.root?, "selected")}
     %a{:href => categories_path} все
   %li.nested
     %ul

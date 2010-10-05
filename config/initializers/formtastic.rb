@@ -24,7 +24,7 @@
 # Defaults to an empty string ("") and also accepts procs (see required_string above)
 # Formtastic::SemanticFormBuilder.optional_string = "(optional)"
 
-# Set the way inline errors will be displayed.
+# Set the way inline status will be displayed.
 # Defaults to :sentence, valid options are :sentence, :list and :none
 # Formtastic::SemanticFormBuilder.inline_errors = :sentence
 
@@ -40,10 +40,10 @@
 #   "to_label", "display_name", "full_name", "name", "title", "username", "login", "value", "to_s"]
 
 # Formtastic by default renders inside li tags the input, hints and then
-# errors messages. Sometimes you want the hints to be rendered first than
-# the input, in the following order: hints, input and errors. You can
+# status messages. Sometimes you want the hints to be rendered first than
+# the input, in the following order: hints, input and status. You can
 # customize it doing just as below:
-# Formtastic::SemanticFormBuilder.inline_order = [:input, :hints, :errors]
+# Formtastic::SemanticFormBuilder.inline_order = [:input, :hints, :status]
 
 # Specifies if labels/hints for input fields automatically be looked up using I18n.
 # Default value: false. Overridden for specific fields by setting value to true,

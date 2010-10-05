@@ -1,0 +1,7 @@
+= semantic_form_for article do |f|
+  = f.inputs do
+    = f.input :title,       :label => "Заголовок"
+    = f.input :body_raw,    :label => "Текст статьи / новости"
+    = f.input :category,    :label => "Категория"
+  = f.buttons do
+    = f.submit "Запостить"

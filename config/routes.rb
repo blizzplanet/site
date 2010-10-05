@@ -1,8 +1,7 @@
 Bru::Application.routes.draw do
   resources :people
-  resources :categories, :only => [:index, :show] do
-    resources :articles
-  end
+  resources :categories, :only => [:index, :show]
+  resources :articles
 
   get 'signup' => 'people#new', :as => :signup
   get 'signin' => 'sessions#new', :as => :signin

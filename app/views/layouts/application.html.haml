@@ -61,10 +61,7 @@
               %input{:type => :image, :src => "/images/search-button.png"}
               .clear
 
-        .item.login
-          %a.interactive{:href => signin_url} Вход
-          или
-          %a.interactive{:href => signup_url} регистрация
+        = render :partial => "widgets/login"
 
         /
           .item.articles

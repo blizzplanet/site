@@ -17,6 +17,10 @@ class Category < BaseModel
   end
 
   # Instance methods
+  def children_articles
+    Article.where(:category_id => self_and_descendants).order(Article.arel_table[:id].desc).limit(10).all
+  end
+
   def slug_field
     :title
   end

@@ -1,0 +1,8 @@
+- if !logged_in?
+  .item.login
+    %a.interactive{:href => signin_url} Вход
+    или
+    %a.interactive{:href => signup_url} регистрация
+- else
+  .item.greeting
+    = current_person.greet

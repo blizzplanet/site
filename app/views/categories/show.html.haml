@@ -1,0 +1,5 @@
+%h1 #{@category.root? ? "Все статьи" : "Статьи по теме #{@category.title}"}
+= render :partial => "articles/listing/article", :collection => @category.children_articles
+\... или вы хотите
+%a{:href => new_article_path} написать
+еще одну новость?

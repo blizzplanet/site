@@ -17,6 +17,5 @@ class CreatePeople < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table "people"
   end
 end

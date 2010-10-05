@@ -4,6 +4,7 @@ class CategoriesController< ApplicationController
   before_filter :find_resource!,  :only => [:show]
 
   def index
+    redirect_to category_path(Category.root)
   end
 
   def show
