@@ -3,13 +3,14 @@ class ArticlesController < ApplicationController
   before_filter :build_resource, :only => [:new, :create]
 
   def new
-
   end
 
   def create
+  end
 
+  def index    
   end
 
 protected
-  
+
 end

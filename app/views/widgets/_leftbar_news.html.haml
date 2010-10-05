@@ -1,0 +1,12 @@
+%h4 Новости
+%ul
+  %li{:class => selected_class(!@categories.blank?, "selected")}
+    %a{:href => categories_path} все
+  %li.nested
+    %ul
+      - Category.main.each do |category|
+        %li{:class => selected_class(!@category.blank? && @category == category, "selected")}
+          %a{:href => category_path(category)} #{category.title}
+  /
+    %li.arrow
+      %a{:href => "#"} Архив

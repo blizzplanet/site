@@ -1,11 +1,11 @@
-%h1 Log In
+%h1 Вход
 = semantic_form_for @session, :url => session_path do |f|
   - if flash[:error]
     = flash[:error]
   = f.semantic_errors :login
   = f.inputs do
-    = f.input :login
-    = f.input :password
-    = f.input :remember_me, :as => :boolean
+    = f.input :login,                        :label => "Имя пользователя"
+    = f.input :password,                     :label => "Пароль"
+    = f.input :remember_me, :as => :boolean, :label => "Помнить меня"
   = f.buttons do
-    = f.submit
+    = f.submit "Войти"

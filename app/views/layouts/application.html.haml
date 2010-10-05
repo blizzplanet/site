@@ -10,7 +10,8 @@
     #wrapper
       #header
         .logo
-          %img{:src => "/images/logo.png", :alt => ""}
+          %a{:href => root_url}
+            %img{:src => "/images/logo.png", :alt => ""}
         /
           .game-picker
             .arrow.left
@@ -36,24 +37,7 @@
               %li
                 %a{:href => "#"} Diablo 3
         .item.active
-          %h4 Новости
-          %ul
-            %li.selected
-              Последние
-            %li.nested
-              %ul
-                %li все
-                %li
-                  %a{:href => "#"} Starcraft
-                %li Diablo
-                %li
-                  %a{:href => "#"} Warcraft
-                %li
-                  %a{:href => "#"} WoW
-                %li
-                  %a{:href => "#"} Blizzard
-            %li.arrow
-              %a{:href => "#"} Архив
+          = render :partial => "widgets/leftbar_news"
         /
           .item.toggled
             .toggler
@@ -144,7 +128,7 @@
         %ul
           %li Новости
           %li
-            %a{:href => "#"} Новости
+            %a{:href => root_url} Новости
           %li
             %a{:href => "#"} Архив
         /
