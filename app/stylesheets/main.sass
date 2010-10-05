@@ -113,7 +113,7 @@ a
       text-transform: uppercase
       text-align: center
       height: 300px
-      width: 145px      
+      width: 145px
       padding: 0
 
     &.hot
@@ -123,7 +123,7 @@ a
         background: url("#{$static}/menu_hot_toggler.png")
       &.toggled
         .toggler
-          background: url("#{$static}/menu_hot_toggler_show.png")        
+          background: url("#{$static}/menu_hot_toggler_show.png")
       h4
         @include header
         color: #fec833
@@ -189,14 +189,19 @@ a
   z-index: 1
   position: relative
 
-  font-size: 14px
+  font-size: 14px  
+
+  h1
+    font-size: 28px
+    color: #ffffff
+    padding-bottom: 15px
 
   h3
     @include header
     font-size: 24px
     color: #fec833
     padding-bottom: 15px
-    
+
   .article
     padding: 15px 0
     .header

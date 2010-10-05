@@ -3,7 +3,7 @@
   %head
     %title Bru
     = javascript_include_tag :defaults
-    = stylesheet_link_tag "main"
+    = stylesheet_link_tag "main", "main_3"
     = formtastic_stylesheet_link_tag
     = csrf_meta_tag
   %body
@@ -11,28 +11,30 @@
       #header
         .logo
           %img{:src => "/images/logo.png", :alt => ""}
-        .game-picker
-          .arrow.left
-          .games
+        /
+          .game-picker
+            .arrow.left
+            .games
+              %ul
+                %li
+                  %img{:src => "/images/world_of_warcraft_logo.png", :alt => ""}
+                %li
+                  %a{:href => "#"} World of Warcraft
+                %li
+                  %a{:href => "#"} World of Warcraft: BC
+
+            .arrow.right
+          .clear
+      #left
+        /
+          .hot.item
+            .toggler
+            %h4 Hot Games
             %ul
               %li
-                %img{:src => "/images/world_of_warcraft_logo.png", :alt => ""}
+                %a{:href => "#"} Starcraft 2
               %li
-                %a{:href => "#"} World of Warcraft
-              %li
-                %a{:href => "#"} World of Warcraft: BC
-
-          .arrow.right
-        .clear
-      #left
-        .hot.item
-          .toggler
-          %h4 Hot Games
-          %ul
-            %li
-              %a{:href => "#"} Starcraft 2
-            %li
-              %a{:href => "#"} Diablo 3
+                %a{:href => "#"} Diablo 3
         .item.active
           %h4 Новости
           %ul
@@ -52,84 +54,87 @@
                   %a{:href => "#"} Blizzard
             %li.arrow
               %a{:href => "#"} Архив
-        .item.toggled
-          .toggler
-          %h4 Ресурсы
-        .item.toggled
-          %h4 Информация
-        .item.toggled
-          .toggler
-          %h4 Общение
-        .item.banner
-          Inner banner
-          %br
-          (145x300 px)
+        /
+          .item.toggled
+            .toggler
+            %h4 Ресурсы
+          .item.toggled
+            %h4 Информация
+          .item.toggled
+            .toggler
+            %h4 Общение
+          .item.banner
+            Inner banner
+            %br
+            (145x300 px)
       #content
         = yield
       #right
-        .item.search
-          %form.search{:action => "#"}
-            %input{:type => :text}
-            %input{:type => :image, :src => "/images/search-button.png"}
-            .clear
+        /
+          .item.search
+            %form.search{:action => "#"}
+              %input{:type => :text}
+              %input{:type => :image, :src => "/images/search-button.png"}
+              .clear
 
         .item.login
-          %a.interactive{:href => "#"} Вход
+          %a.interactive{:href => signin_url} Вход
           или
-          %a.interactive{:href => "#"} регистрация
+          %a.interactive{:href => signup_url} регистрация
 
-
-        .item.articles
-          %h4 Статьи
-          .article
-            .icon.diablo
-            %a{:href => "#"}
-              Тем, кто соблазнился заголовком, сразу же сообщаю, что
-              ничего подобного компания Blizzard не обещает.
-          .article
-            .icon.starcraft
-            %a{:href => "#"}
-              Фанаты Starcraft II очень надеялись, что к ним в руки
-              эта игра попадет еще в 2008 году, но отчет о прошедшей в
-              начале осени конференции Activision Blizzard отрезвил их.
-          .article
-            .icon.diablo
-            %a{:href => "#"}
-              Там четко говорилось, что если ничего не помешает игра выйдет
-              в 2009 году.
-          .article
-            .icon.blizzard
-            %a{:href => "#"}
-              Однако малоизвестный в России интернет-магазин GameStop.com
-              не поверил и решил сам анонсировать выход Starcraft II.
-          .clear
-        .item.tags
-          %h4 Облако тегов
-          .tags
-            %span.size-2 бизнес
-            %span.size-6 блог
-            %span.size-4 блоги
-            %span.size-3 блогосфера
-            %span.size-5 браузеры
-            %span.size-1 будущее
-            %span.size-1 видео
-            %span.size-6 википедия
-            %span.size-4 гаджеты
-            %span.size-3 деньги
-            %span.size-4 дизайн
-            %span.size-3 домены
-            %span.size-2 имена
-            %span.size-3 ЖЖ
-            %span.size-7 игры
-            %span.size-4 идея
-            %span.size-2 инвестиции
-            %span.size-6 интернет
-            %span.size-1 интернет-реклама
-            %span.size-3 интерфейс
-            %span.size-2 информация
-            %span.size-1 бизнес
-            %span.size-4 блог
-            %span.size-5 блоги
+        /
+          .item.articles
+            %h4 Статьи
+            .article
+              .icon.diablo
+              %a{:href => "#"}
+                Тем, кто соблазнился заголовком, сразу же сообщаю, что
+                ничего подобного компания Blizzard не обещает.
+            .article
+              .icon.starcraft
+              %a{:href => "#"}
+                Фанаты Starcraft II очень надеялись, что к ним в руки
+                эта игра попадет еще в 2008 году, но отчет о прошедшей в
+                начале осени конференции Activision Blizzard отрезвил их.
+            .article
+              .icon.diablo
+              %a{:href => "#"}
+                Там четко говорилось, что если ничего не помешает игра выйдет
+                в 2009 году.
+            .article
+              .icon.blizzard
+              %a{:href => "#"}
+                Однако малоизвестный в России интернет-магазин GameStop.com
+                не поверил и решил сам анонсировать выход Starcraft II.
+            .clear
+        /
+          .item.tags
+            %h4 Облако тегов
+            .tags
+              %span.size-2 бизнес
+              %span.size-6 блог
+              %span.size-4 блоги
+              %span.size-3 блогосфера
+              %span.size-5 браузеры
+              %span.size-1 будущее
+              %span.size-1 видео
+              %span.size-6 википедия
+              %span.size-4 гаджеты
+              %span.size-3 деньги
+              %span.size-4 дизайн
+              %span.size-3 домены
+              %span.size-2 имена
+              %span.size-3 ЖЖ
+              %span.size-7 игры
+              %span.size-4 идея
+              %span.size-2 инвестиции
+              %span.size-6 интернет
+              %span.size-1 интернет-реклама
+              %span.size-3 интерфейс
+              %span.size-2 информация
+              %span.size-1 бизнес
+              %span.size-4 блог
+              %span.size-5 блоги
       #footer
         %img{:src => "/images/bottom-logo.png", :alt => ""}
         %dl.copyright
@@ -142,40 +147,41 @@
             %a{:href => "#"} Новости
           %li
             %a{:href => "#"} Архив
-        %ul
-          %li Игры
-          %li
-            %a{:href => "#"} Starcraft II
-          %li
-            %a{:href => "#"} World of Warcraft
-          %li
-            %a{:href => "#"} WoW: BC
-          %li
-            %a{:href => "#"} Starcraft
-          %li
-            %a{:href => "#"} Warcraft III
-          %li
-            %a{:href => "#"} Diablo II
-        %ul
-          %li Ресурсы
-          %li
-            %a{:href => "#"} Wallpapers
-          %li
-            %a{:href => "#"} Комиксы
-          %li
-            %a{:href => "#"} Мастерская
-          %li
-            %a{:href => "#"} Турниры
-          %li
-            %a{:href => "#"} Статьи
-          %li
-            %a{:href => "#"} Библиотека
-        %ul
-          %li Информация
-          %li
-            %a{:href => "#"} О сайте
-          %li &nbsp;
-          %li &nbsp;
-          %li Общение
-          %li
-            %a{:href => "#"} Форумы
+        /
+          %ul
+            %li Игры
+            %li
+              %a{:href => "#"} Starcraft II
+            %li
+              %a{:href => "#"} World of Warcraft
+            %li
+              %a{:href => "#"} WoW: BC
+            %li
+              %a{:href => "#"} Starcraft
+            %li
+              %a{:href => "#"} Warcraft III
+            %li
+              %a{:href => "#"} Diablo II
+          %ul
+            %li Ресурсы
+            %li
+              %a{:href => "#"} Wallpapers
+            %li
+              %a{:href => "#"} Комиксы
+            %li
+              %a{:href => "#"} Мастерская
+            %li
+              %a{:href => "#"} Турниры
+            %li
+              %a{:href => "#"} Статьи
+            %li
+              %a{:href => "#"} Библиотека
+          %ul
+            %li Информация
+            %li
+              %a{:href => "#"} О сайте
+            %li &nbsp;
+            %li &nbsp;
+            %li Общение
+            %li
+              %a{:href => "#"} Форумы

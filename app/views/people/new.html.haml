@@ -1,11 +1,11 @@
-%h1 Sign up as a new user
+%h1 Регистрация
 - @person.password = @person.password_confirmation = nil
 = semantic_form_for @person do |f|
   = f.inputs do
-    = f.input :login
-    = f.input :email
-    = f.input :password,              :as => :password
-    = f.input :password_confirmation, :as => :password
+    = f.input :login,                                   :label => "Имя пользователя"
+    = f.input :email,                                   :label => "Электропочта"
+    = f.input :password,              :as => :password, :label => "Пароль"
+    = f.input :password_confirmation, :as => :password, :label => "Подтверждение пароля"
 
   = f.buttons do
-    = f.submit "Sign up"
+    = f.submit "Зарегистрироваться"
