@@ -44,6 +44,7 @@ GEM
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
+    memcache-client (1.8.5)
     mime-types (1.16)
     nokogiri (1.4.2)
     polyglot (0.3.1)
@@ -98,6 +99,7 @@ DEPENDENCIES
   factory_girl
   formtastic (~> 1.1.0)
   haml (= 3.0.18)
+  memcache-client
   railties (~> 3.0.0)
   rdiscount (~> 1.6.5)
   rspec

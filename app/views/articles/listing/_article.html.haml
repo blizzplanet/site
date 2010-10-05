@@ -18,7 +18,8 @@
         Аноним
 
     .menu
-      %a{:href => edit_article_path(article)} Редактировать 
+      %a{:href => edit_article_path(article)} Редактировать
+      = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
   /
     %a.comments{:href => "#"} 10 комментариев
   .clear

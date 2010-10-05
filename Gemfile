@@ -15,6 +15,7 @@ gem 'arel',          '~> 1.0.1'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 
 gem 'thin'
+gem "memcache-client", :require => "memcache"
 
 # Deploy with Capistrano
 # gem 'capistrano'

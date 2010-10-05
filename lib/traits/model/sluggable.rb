@@ -24,7 +24,7 @@ module Traits
 
       def generate_slug
         if send(slug_field)
-          self.base_slug = slug_prefix + self.send(slug_field)
+          self.base_slug = slug_prefix + self.send(slug_field).transliterated
           self.base_slug = base_slug.gsub(/[^a-zA-Z0-9]+/, "-").gsub(/-+$/, "").downcase
           self.slug = base_slug + slug_first_available_suffix
           slug

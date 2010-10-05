@@ -1,7 +1,7 @@
 !!!
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
-    %title Bru
+    %title= !(title = yield(:title)).blank? ? title : "BRu"
     = javascript_include_tag :defaults
     = stylesheet_link_tag "main", "main_3"
     = formtastic_stylesheet_link_tag
@@ -62,32 +62,7 @@
               .clear
 
         = render :partial => "widgets/login"
-
-        /
-          .item.articles
-            %h4 Статьи
-            .article
-              .icon.diablo
-              %a{:href => "#"}
-                Тем, кто соблазнился заголовком, сразу же сообщаю, что
-                ничего подобного компания Blizzard не обещает.
-            .article
-              .icon.starcraft
-              %a{:href => "#"}
-                Фанаты Starcraft II очень надеялись, что к ним в руки
-                эта игра попадет еще в 2008 году, но отчет о прошедшей в
-                начале осени конференции Activision Blizzard отрезвил их.
-            .article
-              .icon.diablo
-              %a{:href => "#"}
-                Там четко говорилось, что если ничего не помешает игра выйдет
-                в 2009 году.
-            .article
-              .icon.blizzard
-              %a{:href => "#"}
-                Однако малоизвестный в России интернет-магазин GameStop.com
-                не поверил и решил сам анонсировать выход Starcraft II.
-            .clear
+        = render :partial => "widgets/recent_articles"
         /
           .item.tags
             %h4 Облако тегов
@@ -128,21 +103,9 @@
             %a{:href => root_url} Новости
           %li
             %a{:href => "#"} Архив
+
+        = render :partial => "widgets/footer_games"
         /
-          %ul
-            %li Игры
-            %li
-              %a{:href => "#"} Starcraft II
-            %li
-              %a{:href => "#"} World of Warcraft
-            %li
-              %a{:href => "#"} WoW: BC
-            %li
-              %a{:href => "#"} Starcraft
-            %li
-              %a{:href => "#"} Warcraft III
-            %li
-              %a{:href => "#"} Diablo II
           %ul
             %li Ресурсы
             %li

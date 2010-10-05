@@ -68,7 +68,7 @@ module AuthenticatedSystem
           redirect_to new_session_path
         end
         # format.any doesn't work in rails version < http://dev.rubyonrails.org/changeset/8987
-        # Add any other API formats here.  (Some browsers, notably IE6, send Accept: */* and trigger 
+        # Add any other API formats here.  (Some browsers, notably IE6, send Accept: */* and trigger
         # the 'format.any' block incorrectly. See http://bit.ly/ie6_borken or http://bit.ly/ie6_borken2
         # for a workaround.)
         format.any(:json, :xml) do
@@ -114,7 +114,7 @@ module AuthenticatedSystem
         self.current_person = Person.authenticate(login, password)
       end
     end
-    
+
     #
     # Logout
     #
@@ -122,7 +122,7 @@ module AuthenticatedSystem
     # Called from #current_person.  Finaly, attempt to login by an expiring token in the cookie.
     # for the paranoid: we _should_ be storing person_token = hash(cookie_token, request IP)
     def login_from_cookie
-      person = cookies[:auth_token] && Person.find_by_remember_token(cookies[:auth_token].value)
+      person = cookies[:auth_token] && Person.find_by_remember_token(cookies[:auth_token])
       if person && person.remember_token?
         self.current_person = person
         handle_remember_cookie! false # freshen cookie token (keeping date)
@@ -149,7 +149,7 @@ module AuthenticatedSystem
       logout_keeping_session!
       reset_session
     end
-    
+
     #
     # Remember_me Tokens
     #
@@ -161,25 +161,25 @@ module AuthenticatedSystem
 
     def valid_remember_cookie?
       return nil unless @current_person
-      (@current_person.remember_token?) && 
+      (@current_person.remember_token?) &&
         (cookies[:auth_token] == @current_person.remember_token)
     end
-    
+
     # Refresh the cookie auth token if it exists, create it otherwise
     def handle_remember_cookie!(new_cookie_flag)
       return unless @current_person
       case
       when valid_remember_cookie? then @current_person.refresh_token # keeping same expiry date
-      when new_cookie_flag        then @current_person.remember_me 
+      when new_cookie_flag        then @current_person.remember_me
       else                             @current_person.forget_me
       end
       send_remember_cookie!
     end
-  
+
     def kill_remember_cookie!
       cookies.delete :auth_token
     end
-    
+
     def send_remember_cookie!
       cookies[:auth_token] = {
         :value   => @current_person.remember_token,

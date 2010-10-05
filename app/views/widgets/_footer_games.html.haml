@@ -1,0 +1,5 @@
+%ul
+  %li Игры
+  - Category.games.each do |category|
+    %li
+      %a{:href => category_path(category)} #{category.title}

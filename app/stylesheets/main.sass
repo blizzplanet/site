@@ -147,6 +147,7 @@ a
             margin-right: 3px
         li.nested
           padding: 0
+          line-height: 1.75em
           &:before
             display: none
         li.selected
@@ -241,16 +242,16 @@ a
         color: #5faffd
       a.cut
         color: #ffffff
-      &.quote
-        @include default_border
-        @include default_colors
-        @include default_metrics
-        font-style: italic
-        color: #9bceff
-        border-color: #213136
-        strong, b
-          font-style: normal
-          color: #ffffff
+    blockquote
+      @include default_border
+      @include default_colors
+      @include default_metrics
+      font-style: italic
+      color: #9bceff
+      border-color: #213136
+      strong, b
+        font-style: normal
+        color: #ffffff
     .author
       float: left
       font-size: 10px
@@ -260,6 +261,8 @@ a
       float: left
       margin-left: 5px
       font-size: 10px
+      a
+        padding-right: 5px
     a.comments
       float: right
       font-size: 12px

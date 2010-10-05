@@ -42,6 +42,8 @@ module Bru
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password, :password_confirmation]
 
+    config.cache_store = :mem_cache_store
+
     config.generators do |g|
       g.template_engine :haml
       g.test_framework :rspec, :fixture => true, :views => false

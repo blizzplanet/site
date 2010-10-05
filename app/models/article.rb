@@ -16,6 +16,11 @@ class Article < BaseModel
   # Callbacks
   markdown :body_raw => :body
 
+  # Class methods
+  def self.recent
+    order(arel_table[:created_at].desc).joins(:category).limit(5)
+  end
+
   # Instance methods
   def icon
     return "blizzard" unless category
@@ -29,8 +34,15 @@ class Article < BaseModel
     end
   end
 
+  def extract
+    body_raw.split(".")[0..1].map {|b| b + "."}.join("")[0..99]
+  end
 
   def slug_field
     :title
+  end
+
+  def to_param
+    slug
   end
 end

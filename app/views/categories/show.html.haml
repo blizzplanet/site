@@ -1,4 +1,6 @@
-%h1 #{@category.root? ? "Все статьи" : "Статьи по теме #{@category.title}"}
+- category_title = @category.root? ? "Все статьи" : "Статьи по теме #{@category.title}"
+- title "#{category_title} - Blizzplanet.ru"
+%h1 #{category_title}
 = render :partial => "articles/listing/article", :collection => @category.children_articles
 \... или вы хотите
 %a{:href => new_article_path} написать

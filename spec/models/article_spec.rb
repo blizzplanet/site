@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Article do
@@ -40,6 +41,21 @@ describe Article do
     it "should return blizzard for unknown category" do
       subject.icon.should == "blizzard"
     end
+  end
+
+  describe "#extract" do
+    it "should return first two sentences" do
+      subject.body_raw = "Hello. World. Motherfuckers"
+      subject.extract.should == "Hello. World."
+    end
+    
+    it "should cut to 100 symbols" do
+      subject.body_raw = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
+      subject.extract.should == "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
+      # cyrillics
+      subject.body_raw = "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"
+      subject.extract.should == "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"
+    end 
   end
 
   it_should_behave_like "Traits::Model::Sluggable"

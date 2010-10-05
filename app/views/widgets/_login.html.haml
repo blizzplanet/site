@@ -6,3 +6,5 @@
 - else
   .item.greeting
     = current_person.greet
+    %p
+      = link_to "Выйти", session_path, :method => :delete, :confirm => "Уверены?"
