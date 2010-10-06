@@ -20,10 +20,10 @@ class Category < BaseModel
     titles = ["Starcraft 1", "Starcraft 2", "Diablo 2", "Diablo 3", "Warcraft 3", "World of Warcraft"]
     Category.where(:title => titles).all
   end
-  
+
   # Instance methods
   def children_articles
-    Article.where(:category_id => self_and_descendants).order(Article.arel_table[:id].desc).limit(10).all
+    Article.where(:category_id => self_and_descendants).joins(:category).order(Article.arel_table[:id].desc).limit(10).all
   end
 
   def slug_field

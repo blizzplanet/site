@@ -20,7 +20,7 @@
     .menu
       %a{:href => edit_article_path(article)} Редактировать
       = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
-  /
-    %a.comments{:href => "#"} 10 комментариев
+
+  %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}
   .clear
 .separator

@@ -1,2 +1,3 @@
 - title @article.title
 = render :partial => "articles/listing/article", :locals => {:article => @article}
+= render :partial => "comments/form", :locals => {:comment => @article.comments.new, :article => @article}

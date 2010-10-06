@@ -8,3 +8,5 @@
 #   inflect.irregular 'person', 'people'
 #   inflect.uncountable %w( fish sheep )
 # end
+
+I18n::Backend::Simple.send(:include, I18n::Backend::Pluralization)

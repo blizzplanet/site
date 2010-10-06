@@ -7,16 +7,32 @@
   clear: both
 
 .icon
-  padding: 2px 0 6px 0
+  padding: 0
   width: 60px
-  height: 36px
+  height: 34px
   content: "."
   &.diablo
-    background: url("#{$static}/news-icon-diablo.png") no-repeat
+    background: url("#{$static}/icons/news/di.gif") no-repeat
+  &.diablo2
+    background: url("#{$static}/icons/news/di2.gif") no-repeat
+  &.diablo3
+    background: url("#{$static}/icons/news/di3.gif") no-repeat
   &.starcraft
-    background: url("#{$static}/news-icon-starcraft.png") no-repeat
+    background: url("#{$static}/icons/news/sc.gif") no-repeat
+  &.starcraft2
+    background: url("#{$static}/icons/news/sc2.gif") no-repeat
+  &.warcraft
+    background: url("#{$static}/icons/news/wc.gif") no-repeat
+  &.warcraft2
+    background: url("#{$static}/icons/news/wc2.gif") no-repeat
+  &.warcraft3
+    background: url("#{$static}/icons/news/wc3.gif") no-repeat
   &.blizzard
-    background: url("#{$static}/news-icon-blizzard.png") no-repeat
+    background: url("#{$static}/icons/news/blizz.gif") no-repeat
+  &.bnet
+    background: url("#{$static}/icons/news/bnet.gif") no-repeat
+
+
 html
   background: url("#{$static}/header.jpg")
   background-color: #000
@@ -256,6 +272,7 @@ a
       @include default_border
       @include default_colors
       @include default_metrics
+      padding-bottom: 0
       font-style: italic
       color: #9bceff
       border-color: #213136
@@ -282,6 +299,15 @@ a
     border-top: 1px solid #1f3034
     width: 475px
 
+  form.comments_form
+    textarea
+      clear: left
+      width: 95%
+      max-width: 95%
+    p.inline-hints
+      margin-left: 0
+    fieldset.buttons
+      padding-left: 0
 #right
   @include column
   float: left

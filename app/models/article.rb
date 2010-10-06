@@ -6,6 +6,7 @@ class Article < BaseModel
   # Assocations
   belongs_to :category
   belongs_to :author, :class_name => "Person"
+  has_many :comments
   # Validations
   validates_presence_of :title
   validates_presence_of :body_raw
@@ -25,10 +26,22 @@ class Article < BaseModel
   def icon
     return "blizzard" unless category
     case category.title
+      when /diablo 3/i
+        "diablo3"
+      when /diablo 2/i
+        "diablo2"
       when /diablo/i
         "diablo"
+      when /starcraft 2/i
+        "starcraft2"
       when /starcraft/i
         "starcraft"
+      when /warcraft 3/i
+        "warcraft3"
+      when /warcraft 2/i
+        "warcraft2"
+      when /warcraft/i
+        "warcraft"
       else
         "blizzard"
     end
