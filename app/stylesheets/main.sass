@@ -36,7 +36,7 @@ a
     border-bottom: 1px dashed
 
 #header
-  height: 266px
+  height: $header
   margin: 25px 0 0 0
   .logo
     float: left
@@ -71,17 +71,25 @@ a
           line-height: 40px
           a
             color: #e5b122
+  #login
+    @include default_item
+    width: $right_column - 32px
+    float: right
+    font-size: 14px
+    color: #b0b0b0
+    margin-right: -4px
 #columns
   overflow: hidden
 
 #left
   @include column
   float: left
+  margin-right: 16px
   .item
     @include default_item
 
     padding: 20px 17px
-    width: 145px - 34px
+    width: $left_column - 34px
 
     .toggler
       float: right
@@ -129,12 +137,7 @@ a
         color: #fec833
 
     &.active
-      @include rounded_side(right, 0px)
-      z-index: 10
-      position: relative
-      width: 169px - 34px
-      border-right: 1px solid rgba(10, 29, 34, 0.7)
-
+      color: #1a8eff
       h4
         color: #1987f2
       ul
@@ -143,24 +146,28 @@ a
         li
           padding-left: 9px
           &:before
-            content: url("#{$static}/list-arrow.png")
+            content: url("#{$static}/list-arrow-blue.png")
             margin-right: 3px
+          a
+            color: #1a8eff
         li.nested
           padding: 0
           line-height: 1.75em
           &:before
             display: none
         li.selected
+          @include rounded(2px)
           padding-left: 8px
-          background: transparent
-          background-image: url("#{$static}/menu-arrow-right.png")
-          background-repeat: no-repeat
+          background: #1a8eff - #446
+
 
           padding-top: 3px
           padding-bottom: 3px
           border-right: 0
 
           color: #FFFFFF
+          a
+            color: #FFFFFF
           &:before
             display: none
 
@@ -173,7 +180,7 @@ a
             &:before
               display: none
             a
-              color: inherit
+              color: #1a8eff
 
 #content
   @include default_item
@@ -182,7 +189,7 @@ a
 
   float: left
   min-height: 600px
-  width: 544px - 54px
+  width: $content - 46px
   padding-left: 23px
   padding-right: 23px
   padding-top: 23px
@@ -275,11 +282,11 @@ a
 #right
   @include column
   float: left
-  width: 225px - 32px
-  margin-left: 25px
+  margin-left: 15px
+  width: $right_column - 2*$padding
   .item
     @include default_item
-    width: 225px - 32px
+    width: $right_column - 2*$padding
 
     h4
       @include header
@@ -287,7 +294,7 @@ a
       font-size: 14px
 
     &.search
-      width: 225px - 16px
+      width: $right_column - $padding
       padding-right: 0
     form.search
       input[type=text]
@@ -303,11 +310,6 @@ a
         float: left
     &.greeting
       font-size: 14px
-      color: #b0b0b0
-    &.login
-      text-transform: uppercase
-      font-size: 14px
-      font-weight: bold
       color: #b0b0b0
     &.articles
       .article

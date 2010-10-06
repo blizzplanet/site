@@ -18,4 +18,8 @@ class Person < BaseModel
     (I18n.t("greetings").sample || "") % {:username => login}
   end
 
+  def display_name
+    name.blank? ? login : "#{name} (#{login})"
+  end
+
 end

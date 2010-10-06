@@ -1,10 +1,9 @@
-- if !logged_in?
-  .item.login
+#login
+  - if !logged_in?
     %a.interactive{:href => signin_url} Вход
     или
     %a.interactive{:href => signup_url} регистрация
-- else
-  .item.greeting
+  - else
     = current_person.greet
     %p
       = link_to "Выйти", session_path, :method => :delete, :confirm => "Уверены?"

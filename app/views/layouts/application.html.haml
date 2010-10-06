@@ -1,7 +1,7 @@
 !!!
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
-    %title= !(title = yield(:title)).blank? ? title : "BRu"
+    %title= !(title = yield(:title)).blank? ? "#{title} — blizzplanet.ru" : "blizzplanet.ru"
     = javascript_include_tag :defaults
     = stylesheet_link_tag "main", "main_3"
     = formtastic_stylesheet_link_tag
@@ -12,6 +12,7 @@
         .logo
           %a{:href => root_url}
             %img{:src => "/images/logo.png", :alt => ""}
+        = render :partial => "widgets/login"
         /
           .game-picker
             .arrow.left
@@ -61,7 +62,6 @@
               %input{:type => :image, :src => "/images/search-button.png"}
               .clear
 
-        = render :partial => "widgets/login"
         = render :partial => "widgets/recent_articles"
         /
           .item.tags

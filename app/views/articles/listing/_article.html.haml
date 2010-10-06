@@ -13,7 +13,7 @@
     .author
       by
       - if article.author
-        %a{:href => "#"} #{article.author.login}
+        %a{:href => "#"} #{article.author.display_name}
       - else
         Аноним
 
