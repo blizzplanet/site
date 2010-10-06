@@ -16,5 +16,5 @@ form.formtastic fieldset ol li fieldset legend { margin-left: -6px;}
 form.formtastic fieldset > ol > li label { width: 35% }
 form.formtastic fieldset > ol > li.string input,
 form.formtastic fieldset > ol > li.text textarea,
-form.formtastic fieldset > ol > li.password input { width: 50%; max-width: 50% }
+form.formtastic fieldset > ol > li.password input { width: 60%; max-width: 60% }
 form.formtastic fieldset.buttons > ol > input { padding: 5px }
