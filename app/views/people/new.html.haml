@@ -2,7 +2,8 @@
 - @person.password = @person.password_confirmation = nil
 = semantic_form_for @person do |f|
   = f.inputs do
-    = f.input :login,                                   :label => "Имя пользователя"
+    = f.input :login,                                   :label => "Имя учетной записи (логин)"
+    = f.input :name,                                    :label => "Отображаемое имя"
     = f.input :email,                                   :label => "Электропочта"
     = f.input :password,              :as => :password, :label => "Пароль"
     = f.input :password_confirmation, :as => :password, :label => "Подтверждение пароля"

@@ -9,6 +9,8 @@ class Person < BaseModel
   include ::Authentication::ByPassword
   include ::Authentication::ByCookieToken
 
+
+
   # Class methods
 
   # Instance methods

@@ -1,7 +1,7 @@
 = semantic_form_for article do |f|
   = f.inputs do
     = f.input :title,       :label => "Заголовок"
-    = f.input :body_raw,    :label => "Текст статьи / новости"
+    = f.input :body_raw,    :label => "Текст статьи / новости", :hint => raw("Для текста новости используйте  <a href='http://ru.wikipedia.org/wiki/Textile'>Текстиль</a>")
     = f.input :category,    :label => "Категория"
   = f.buttons do
     = f.submit "Запостить"

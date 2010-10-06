@@ -12,7 +12,7 @@ shared_examples_for "Traits::Model::Sluggable" do
   end
 
   describe "#generate_slug" do
-    before(:each) { subject.send("#{slug_field}=", "Hello, world!"); subject.base_slug = nil }
+    before(:each) { subject.send("#{slug_field}=", "Hello, world"); subject.base_slug = nil }
 
     it "should generate a slug from given slug field omitting punctuation and special symbols" do
       subject.send(:generate_slug).should == "hello-world"
@@ -39,7 +39,7 @@ shared_examples_for "Traits::Model::Sluggable" do
 
   it "should generate slug before validations" do
     subject.slug = nil
-    subject.stub!(slug_field).and_return("Hello, world, yo!")
+    subject.stub!(slug_field).and_return("Hello, world, yo")
     subject.should be_valid
     subject.slug.should == "hello-world-yo"
   end
@@ -56,6 +56,14 @@ shared_examples_for "Traits::Model::Sluggable" do
       subject.send("#{slug_field}=", "")
       subject.save
     }.should_not raise_error
+  end
+
+  it "should convert special symbols to dashes" do
+    lambda {
+      subject.send("#{slug_field}=", "\\\\")
+      subject.save
+    }.should_not raise_error
+    subject.base_slug.should == "-"
   end
 
 end

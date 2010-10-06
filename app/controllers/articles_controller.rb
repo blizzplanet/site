@@ -17,10 +17,10 @@ class ArticlesController < ApplicationController
   end
 
 protected
-
-  def resource_key
-    :slug
-  end
+#
+#  def resource_key
+#    :slug
+#  end
 
   def assign_author
     @article.author = current_person
