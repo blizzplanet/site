@@ -6,7 +6,8 @@ class CommentsController < ApplicationController
 
   before_filter :find_article!
   before_filter :build_resource, :only => [:create]
-  before_filter :assign_author, :only => [:create]
+  before_filter :assign_author,  :only => [:create]
+  before_filter :assign_article, :only => [:create]
   before_filter :find_resource!, :only => [:update, :destroy]
 
 protected
@@ -17,6 +18,10 @@ protected
   def find_article!
     @article = Article.find(params[:article_id])
     @article || not_found!
+  end
+
+  def assign_article
+    @comment.article = @article
   end
 
   def resource_scope

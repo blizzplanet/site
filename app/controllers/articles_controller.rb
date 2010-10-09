@@ -14,6 +14,7 @@ class ArticlesController < ApplicationController
 
   def show
     @category = @article.category
+    @comments = @article.comments.joins(:author)
   end
 
 protected

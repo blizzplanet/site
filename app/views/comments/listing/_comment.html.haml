@@ -1,2 +1,5 @@
 %li.comment
-  = comment.body
+  = raw comment.body
+  .author
+    &mdash;
+    = comment.author.display_name

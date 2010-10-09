@@ -4,7 +4,8 @@ class Comment < BaseModel
 
   # Associations
   belongs_to :author, :class_name => "Person"
-
+  belongs_to :article
+  
   # Validations
   validates_presence_of :body_raw
   attr_accessible :body_raw
