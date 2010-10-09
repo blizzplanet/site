@@ -12,7 +12,7 @@ class Article < BaseModel
   validates_presence_of :body_raw
   validates_presence_of :category
 
-  attr_accessible :title, :body_raw, :category_id
+  attr_accessible :title, :body_raw, :short_version, :category_id
 
   # Callbacks
   markdown :body_raw => :body
@@ -46,9 +46,9 @@ class Article < BaseModel
         "blizzard"
     end
   end
-
+  
   def extract
-    body_raw.split(".")[0..1].map {|b| b + "."}.join("")[0..99]
+    self.short_version.blank? ? body_raw.split(".")[0..1].map {|b| b + "."}.join("")[0..99] : self.short_version
   end
 
   def slug_field

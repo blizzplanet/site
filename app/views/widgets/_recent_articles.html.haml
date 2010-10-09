@@ -3,8 +3,9 @@
     %h4 Свежие статьи
     - Article.recent.each do |article|
       .article
-        .header
-          %div{:class => "icon #{article.icon}"}
+        %div{:class => "icon #{article.icon}"}
+        .header          
           %a{:href => article_path(article)} #{article.title}
+        .clear
         %p #{article.extract}
     .clear

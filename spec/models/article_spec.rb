@@ -92,6 +92,12 @@ describe Article do
       subject.body_raw = "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"
       subject.extract.should == "аааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааааа"
     end
+    
+    it "should return short version when available" do
+      subject.body_raw       = "Hi thar"
+      subject.short_version  = "Here go cookies"
+      subject.extract.should == "Here go cookies"
+    end
   end
 
   it_should_behave_like "Traits::Model::Sluggable"
