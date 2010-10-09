@@ -2,4 +2,4 @@
   = raw comment.body
   .author
     &mdash;
-    = comment.author.display_name
+    = comment.author ? comment.author.display_name : "Аноним"

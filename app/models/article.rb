@@ -26,6 +26,10 @@ class Article < BaseModel
   def icon
     return "blizzard" unless category
     case category.title
+      when /wow/i
+        "wow"
+      when /world of warcraft/i
+        "wow"
       when /diablo 3/i
         "diablo3"
       when /diablo 2/i

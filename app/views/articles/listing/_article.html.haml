@@ -1,26 +1,27 @@
-.article
-  .header
-    %div{:class => "icon #{article.icon}"}
-    .date
-      .number= article.created_at.day
-      .month= I18n.t("months.genetive.#{article.created_at.month}")
-    %h2
-      %a{:href => url_for(article)}= article.title
+= cache [article, :body] do
+  .article
+    .header
+      %div{:class => "icon #{article.icon}"}
+      .date
+        .number= article.created_at.day
+        .month= I18n.t("months.genetive.#{article.created_at.month}")
+      %h2
+        %a{:href => url_for(article)}= article.title
+      .clear
+    .content
+      = raw article.body
+    .footer
+      .author
+        by
+        - if article.author
+          %a{:href => "#"} #{article.author.display_name}
+        - else
+          Аноним
+
+      .menu
+        %a{:href => edit_article_path(article)} Редактировать
+        = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
+
+    %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}
     .clear
-  .content
-    = raw article.body
-  .footer
-    .author
-      by
-      - if article.author
-        %a{:href => "#"} #{article.author.display_name}
-      - else
-        Аноним
-
-    .menu
-      %a{:href => edit_article_path(article)} Редактировать
-      = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
-
-  %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}
-  .clear
-.separator
+  .separator

@@ -1,10 +1,10 @@
-= cache [:widget, :recent_articles], :expires_in => 1.seconds do
+= cache [:widget, :recent_articles], :expires_in => 30.seconds do
   .item.articles
     %h4 Свежие статьи
     - Article.recent.each do |article|
       .article
-        %div{:class => "icon #{article.icon}"}
         .header          
+          %div{:class => "icon #{article.icon}"}
           %a{:href => article_path(article)} #{article.title}
         .clear
         %p #{article.extract}
