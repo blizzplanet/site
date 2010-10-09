@@ -6,33 +6,6 @@
 .clear
   clear: both
 
-.icon
-  padding: 0
-  width: 60px
-  height: 34px
-  content: "."
-  &.diablo
-    background: url("#{$static}/icons/news/di.gif") no-repeat
-  &.diablo2
-    background: url("#{$static}/icons/news/di2.gif") no-repeat
-  &.diablo3
-    background: url("#{$static}/icons/news/di3.gif") no-repeat
-  &.starcraft
-    background: url("#{$static}/icons/news/sc.gif") no-repeat
-  &.starcraft2
-    background: url("#{$static}/icons/news/sc2.gif") no-repeat
-  &.warcraft
-    background: url("#{$static}/icons/news/wc.gif") no-repeat
-  &.warcraft2
-    background: url("#{$static}/icons/news/wc2.gif") no-repeat
-  &.warcraft3
-    background: url("#{$static}/icons/news/wc3.gif") no-repeat
-  &.blizzard
-    background: url("#{$static}/icons/news/blizz.gif") no-repeat
-  &.bnet
-    background: url("#{$static}/icons/news/bnet.gif") no-repeat
-
-
 html
   background: url("#{$static}/header.jpg")
   background-color: #000
@@ -247,6 +220,31 @@ a
       .icon
         float: left
         margin-right: 12px
+        padding: 0
+        width: 60px
+        height: 34px
+        content: "."
+        &.diablo
+          background: url("#{$static}/icons/news/di.gif") no-repeat
+        &.diablo2
+          background: url("#{$static}/icons/news/di2.gif") no-repeat
+        &.diablo3
+          background: url("#{$static}/icons/news/di3.gif") no-repeat
+        &.starcraft
+          background: url("#{$static}/icons/news/sc.gif") no-repeat
+        &.starcraft2
+          background: url("#{$static}/icons/news/sc2.gif") no-repeat
+        &.warcraft
+          background: url("#{$static}/icons/news/wc.gif") no-repeat
+        &.warcraft2
+          background: url("#{$static}/icons/news/wc2.gif") no-repeat
+        &.warcraft3
+          background: url("#{$static}/icons/news/wc3.gif") no-repeat
+        &.blizzard
+          background: url("#{$static}/icons/news/blizz.gif") no-repeat
+        &.bnet
+          background: url("#{$static}/icons/news/bnet.gif") no-repeat
+
       .date
         float: right
         background-color: #1a8eff
@@ -341,11 +339,44 @@ a
       font-size: 14px
       color: #b0b0b0
     &.articles
+      float: left
+      clear: left
+      color: #FFFFFF
+      margin: 5px 0 15px 0
       .article
-        float: left
-        clear: left
-        color: #FFFFFF
-        margin: 5px 0 15px 0
+        .header
+          display: block
+          height: 24px
+          line-height: 24px
+          vertical-align: middle
+          .icon
+            display: inline-block
+            float: left
+            width: 24px
+            height: 24px
+            margin-right: 5px
+            &.diablo
+              content: url("#{$static}/icons/news/small/di.gif")
+            &.diablo2
+              content: url("#{$static}/icons/news/small/di.gif")
+            &.diablo3
+              content: url("#{$static}/icons/news/small/di.gif")
+            &.starcraft
+              content: url("#{$static}/icons/news/small/sc.gif")
+            &.starcraft2
+              content: url("#{$static}/icons/news/small/sc.gif")
+            &.warcraft
+              content: url("#{$static}/icons/news/small/wc.gif")
+            &.warcraft2
+              content: url("#{$static}/icons/news/small/wc.gif")
+            &.warcraft3
+              content: url("#{$static}/icons/news/small/wc.gif")
+            &.blizzard
+              content: url("#{$static}/icons/news/small/blizz.gif")
+            &.bnet
+              content: url("#{$static}/icons/news/small/blizz.gif")
+        
+          
     &.tags
       color: #FFF
       .tags
