@@ -2,11 +2,21 @@ class Article < BaseModel
   # Traits / Modules
   include ::Traits::Model::Sluggable
   include ::Traits::Model::TextProcessing::Markdown
+  # Properties
+  property :id,            Serial
+  property :body_raw,      Text
+  property :body,          Text
+  property :short_version, Text
+  property :title,         String,  :length => 5..100
+  property :base_slug,     String,  :length => 0..250, :allow_nil => true
+  property :slug,          String,  :length => 0..250, :allow_nil => true, :index => true
+  property :version,       Integer, :default => 0
+  property :created_at,    DateTime
 
   # Assocations
-  belongs_to :category
-  belongs_to :author, :class_name => "Person"
-  has_many :comments
+  belongs_to :category,                   :required => false
+  belongs_to :author, "Person",           :required => false
+  has n, :comments
   # Validations
   validates_presence_of :title
   validates_presence_of :body_raw
@@ -19,7 +29,7 @@ class Article < BaseModel
 
   # Class methods
   def self.recent
-    order(arel_table[:created_at].desc).joins(:category).limit(5)
+    all(:order => :created_at.desc, :limit => 5)
   end
 
   # Instance methods
@@ -60,6 +70,7 @@ class Article < BaseModel
   end
 
   def to_param
-    "#{id}--#{slug}"
+    # "#{id}--#{slug}"
+    slug
   end
 end

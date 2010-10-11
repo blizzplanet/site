@@ -1,11 +1,15 @@
 class Category < BaseModel
   # Traits / Modules
-  include ::CollectiveIdea::Acts::NestedSet::Base
-  acts_as_nested_set
+  is_nested_set
   include ::Traits::Model::Sluggable
-
+  # Properties
+  property :id, Serial
+  property :title,     String
+  property :base_slug, String
+  property :slug,      String, :index => true
+  
   # Associations
-  has_many :articles
+  has n, :articles
 
   # Validations
   validates_presence_of :title
@@ -13,17 +17,17 @@ class Category < BaseModel
   # Class methods
   def self.main
     titles = ["Starcraft 1", "Starcraft 2", "Diablo 2", "Diablo 3", "Warcraft 3", "World of Warcraft", "Blizzard"]
-    Category.where(:title => titles).all
+    Category.all(:title => titles)
   end
 
   def self.games
     titles = ["Starcraft 1", "Starcraft 2", "Diablo 2", "Diablo 3", "Warcraft 3", "World of Warcraft"]
-    Category.where(:title => titles).all
+    Category.all(:title => titles)
   end
 
   # Instance methods
   def children_articles
-    Article.where(:category_id => self_and_descendants).joins(:category).order(Article.arel_table[:id].desc).limit(10).all
+    Article.all(:category => self_and_descendants, :order => :id.desc, :limit => 10)
   end
 
   def slug_field

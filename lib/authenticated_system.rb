@@ -6,6 +6,10 @@ module AuthenticatedSystem
       !!current_person
     end
 
+    def signed_in?
+      logged_in?
+    end
+
     # Accesses the current person from the session.
     # Future calls avoid the database because nil is not equal to false.
     def current_person
@@ -105,13 +109,37 @@ module AuthenticatedSystem
 
     # Called from #current_person.  First attempt to login by the person id stored in the session.
     def login_from_session
-      self.current_person = Person.find_by_id(session[:person_id]) if session[:person_id]
+      self.current_person = Person.first(:id => session[:person_id]) if session[:person_id]
     end
 
     # Called from #current_person.  Now, attempt to login by basic authentication information.
     def login_from_basic_auth
       authenticate_with_http_basic do |login, password|
         self.current_person = Person.authenticate(login, password)
+      end
+    end
+
+
+    def login_from_facebook
+      key = HighClothing.config["facebook"]["application_key"]
+      if cookies[key]
+        args = ["user", "session_key", "expires", "ss"].map {|arg| "#{key}_#{arg}"} << "#{key}"
+        args = args.map {|arg| cookies[arg] }
+        person = Person.login_from_facebook(*args)
+        self.current_person = person if person
+      end
+    end
+    #
+    # Register
+    #
+
+    def register_from_facebook
+      key = HighClothing.config["facebook"]["application_key"]
+      if cookies[key]
+        args = ["user", "session_key", "expires", "ss"].map {|arg| "#{key}_#{arg}"} << "#{key}"
+        args = args.map {|arg| cookies[arg] }
+        person = Person.register_from_facebook(*args)
+        self.current_person = person if person
       end
     end
 
@@ -122,7 +150,7 @@ module AuthenticatedSystem
     # Called from #current_person.  Finaly, attempt to login by an expiring token in the cookie.
     # for the paranoid: we _should_ be storing person_token = hash(cookie_token, request IP)
     def login_from_cookie
-      person = cookies[:auth_token] && Person.find_by_remember_token(cookies[:auth_token])
+      person = cookies[:auth_token] && Person.first(:remember_token => cookies[:auth_token])
       if person && person.remember_token?
         self.current_person = person
         handle_remember_cookie! false # freshen cookie token (keeping date)
@@ -138,6 +166,7 @@ module AuthenticatedSystem
       @current_person.forget_me if @current_person.is_a? Person
       @current_person = false     # not logged in, and don't do it for me
       kill_remember_cookie!     # Kill client-side auth cookie
+      kill_facebook_cookie!
       session[:person_id] = nil   # keeps the session but kill our variable
       # explicitly kill any other session variables you set
     end
@@ -178,6 +207,11 @@ module AuthenticatedSystem
 
     def kill_remember_cookie!
       cookies.delete :auth_token
+    end
+
+    def kill_facebook_cookie!
+      # p cookies[HighClothing.config["facebook"]["application_key"]]
+      cookies.delete(HighClothing.config["facebook"]["application_key"])
     end
 
     def send_remember_cookie!

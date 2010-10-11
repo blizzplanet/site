@@ -1,9 +1,16 @@
 class Comment < BaseModel
   # Traits / Modules
   include ::Traits::Model::TextProcessing::Markdown
+  
+  # Properties
+  property :id,         Serial
+  property :body_raw,   Text
+  property :body,       Text
+  property :version,    Integer, :default => 0
+  property :created_at, DateTime
 
   # Associations
-  belongs_to :author, :class_name => "Person"
+  belongs_to :author, "Person"
   belongs_to :article
   
   # Validations
@@ -13,7 +20,7 @@ class Comment < BaseModel
 
   # Callbacks
   markdown :body_raw => :body
-  after_save :increment_article_version
+  after :save, :increment_article_version
   
 protected
   

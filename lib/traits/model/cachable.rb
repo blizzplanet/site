@@ -9,7 +9,7 @@ module Traits
         result = [self.class.name, id]
         result << updated_at if respond_to?(:updated_at)
         result << version    if respond_to?(:version)
-        result << ActiveSupport::SecureRandom.hex(32) if new_record?
+        result << ActiveSupport::SecureRandom.hex(32) if new?
         ActiveSupport::Cache.expand_cache_key(result.flatten.compact)
       end
 

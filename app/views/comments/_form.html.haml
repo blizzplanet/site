@@ -1,6 +1,6 @@
 %h2 Добавить комментарий
 = semantic_form_for [article, comment], :html => {:class => "comments_form"} do |f|
   = f.inputs do
-    = f.input :body_raw,    :label => "Текст комментария", :hint => raw("Для разметки используйте  <a href='http://ru.wikipedia.org/wiki/Textile'>Текстиль</a>"), :input_html => {:cols => 100}
+    = f.input :body_raw,    :label => "Текст комментария", :as => :text, :hint => raw("Для разметки используйте  <a href='http://ru.wikipedia.org/wiki/Textile'>Текстиль</a>"), :input_html => {:cols => 100}
   = f.buttons do
     = f.submit "Запостить"

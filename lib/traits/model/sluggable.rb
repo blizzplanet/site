@@ -3,6 +3,8 @@ module Traits
     module Sluggable
       def self.included(base)
         base.class_eval do
+          property :base_slug, String, :index => true
+          property :slug, String, :index => true
           before_validation :generate_slug
           validates_presence_of :slug
         end
@@ -11,7 +13,7 @@ module Traits
 
       protected
       def slug_scope
-        self.class.scoped
+        self.class
       end
 
       def slug_field
@@ -32,10 +34,9 @@ module Traits
       end
 
       def slug_first_available_suffix
-        scope = slug_scope
-        scope = scope.where(:base_slug => "#{base_slug}")
-        scope = scope.where(self.class.arel_table[:id].lt(id)) if persisted?
-        slug_count = scope.count
+        slug_options = {:base_slug => "#{base_slug}"}
+        slug_options[:id.lt] = id unless new?
+        slug_count = slug_scope.count(slug_options)
         slug_count > 0 ? "--#{slug_count}" : ""
       end
     end

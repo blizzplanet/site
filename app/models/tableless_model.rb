@@ -5,7 +5,15 @@ class TablelessModel
 
   include ::Traits::Model::Attributes::MassAssignment
   
+  def persisted?
+    false
+  end
+  
   def new_record?
-    true
+    !persisted?
+  end
+  
+  def new?
+    new_record?
   end
 end

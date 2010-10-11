@@ -1,11 +1,14 @@
 require 'spec_helper'
 
 class TestResource < BaseModel
-  set_table_name :articles
+  property :key_id, Serial
+  property :field, String
 end
 
+DataMapper.auto_migrate!
+
 class TestResourcesController < ApplicationController
-  include Traits::Controller::Resource
+  include Traits::Controller::Resource 
 end
 
 describe TestResourcesController do
@@ -61,8 +64,8 @@ describe TestResourcesController do
 
   context "#new_resource_attributes" do
     it "should return params for new resource" do
-      subject.stub!(:params).and_return(:test_resource => {:title => "wtf"})
-      subject.send(:new_resource_attributes).should == {:title => "wtf"}
+      subject.stub!(:params).and_return(:test_resource => {:field => "wtf"})
+      subject.send(:new_resource_attributes).should == {:field => "wtf"}
     end
 
     it "should return empty hash if no params provided" do
@@ -72,25 +75,25 @@ describe TestResourcesController do
 
   context "#resource_key" do
     it "should return a key field for resource model" do
-      subject.send(:resource_key).should == :id
+      subject.send(:resource_key).should == :key_id
     end
   end
-
+  
 
   # filters
   context "#build_resource" do
     it "should set resource to a new record by default" do
       subject.send(:build_resource)
       subject.send(:resource).should be_a(TestResource)
-      subject.send(:resource).should be_a_new_record
+      subject.send(:resource).should be_new
     end
 
     it "should make use of request params" do
-      subject.stub!(:params).and_return(:test_resource => {:title => "Haba"})
+      subject.stub!(:params).and_return(:test_resource => {:field => "Haba"})
       subject.send(:build_resource)
       subject.send(:resource).should be_a(TestResource)
-      subject.send(:resource).should be_a_new_record
-      subject.send(:resource).title.should == "Haba"
+      subject.send(:resource).should be_new
+      subject.send(:resource).field.should == "Haba"
     end
   end
 
@@ -98,23 +101,23 @@ describe TestResourcesController do
     it "should update resource attributes from params" do
       subject.send(:build_resource)
       subject.send(:resource).should be_a(TestResource)
-      subject.send(:resource).should be_a_new_record
-      subject.stub!(:params).and_return(:test_resource => {:title => "Haba"})
+      subject.send(:resource).should be_new
+      subject.stub!(:params).and_return(:test_resource => {:field => "Haba"})
       subject.send(:update_resource)
-      subject.send(:resource).title.should == "Haba"
+      subject.send(:resource).field.should == "Haba"
     end
   end
 
   context "#fetch_resource" do
-    let(:resource) { TestResource.create(:title => "wtf", :body_raw => "123") }
+    let(:resource) { TestResource.create(:field => "wtf") }
     it "should use id from params hash to find a resource" do
-      subject.stub!(:params).and_return(:id => resource.id)
+      subject.stub!(:params).and_return(:id => resource.key_id)
       subject.send(:fetch_resource).should == resource
     end
 
     it "should be possible to use non-standard key for lookup" do
-      subject.stub!(:resource_key).and_return(:body_raw)
-      subject.stub!(:params).and_return(:id => resource.body_raw)
+      subject.stub!(:resource_key).and_return(:field)
+      subject.stub!(:params).and_return(:id => resource.field)
       subject.send(:fetch_resource).should == resource
     end
 
@@ -123,24 +126,23 @@ describe TestResourcesController do
       subject.send(:fetch_resource)
     end
 
-    it "should call not found if not found and using banged version" do
+    it "should raise an error if not found and using banged version" do
       subject.should_receive(:not_found!)
-      subject.send(:fetch_resource!)
+      subject.send(:fetch_resource!)   
     end
   end
 
   context "#find_resource" do
-    let(:resource) { TestResource.create(:title => "wtf") }
+    let(:resource) { TestResource.create(:field => "wtf") }
     it "should assign ivar" do
-      subject.stub!(:params).and_return(:id => resource.id)
+      subject.stub!(:params).and_return(:id => resource.key_id)
       subject.send(:find_resource)
       subject.instance_variable_get(:@test_resource).should == resource
     end
 
     it "should not raise an error if not found and using non-banged version" do
-      lambda {
-        subject.send(:find_resource)
-      }.should_not raise_error
+      subject.should_not_receive(:not_found!)
+      subject.send(:find_resource)
     end
 
     it "should raise an error if not found and using banged version" do
@@ -150,18 +152,18 @@ describe TestResourcesController do
   end
 
   context "#find_resources" do
-    let(:resources) { ("a".."f").map {|c| TestResource.create(:title => c)} }
+    let(:resources) { ("a".."f").map {|c| TestResource.create(:field => c)} }
     before(:each) { resources }
     it "should find all resources by default" do
       subject.send(:find_resources)
       ivar = subject.instance_variable_get(:@test_resources)
-      resources.each {|r| ivar.should include(r) }
+      resources.each {|r| ivar.should include(r) }      
     end
 
     it "should use #resource_scope" do
-      subject.stub!(:resource_scope).and_return(TestResource.where(["title > ?", "e"]))
+      subject.stub!(:resource_scope).and_return(TestResource.all(:field.gt => "e"))
       subject.send(:find_resources)
-      subject.instance_variable_get(:@test_resources).should == [resources.last]
+      subject.instance_variable_get(:@test_resources).should == [resources.last]                  
     end
   end
 end

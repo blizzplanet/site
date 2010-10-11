@@ -1,8 +1,8 @@
 = semantic_form_for article do |f|
   = f.inputs do
     = f.input :title,         :label => "Заголовок"
-    = f.input :body_raw,      :label => "Текст статьи / новости", :hint => raw("Для текста новости используйте  <a href='http://ru.wikipedia.org/wiki/Textile'>Текстиль</a>")
-    = f.input :short_version, :label => "Короткая версия",        :hint => "В двух словах опишите, о чем статья / новость", :input_html => {:rows => 3}
-    = f.input :category,      :label => "Категория"
+    = f.input :body_raw,      :label => "Текст статьи / новости", :as => :text,    :hint => raw("Для текста новости используйте  <a href='http://ru.wikipedia.org/wiki/Textile'>Текстиль</a>")
+    = f.input :short_version, :label => "Короткая версия",        :as => :text,    :hint => "В двух словах опишите, о чем статья / новость", :input_html => {:rows => 3}
+    = f.input :category_id,   :label => "Категория",              :as => :select,  :collection => Category.all
   = f.buttons do
     = f.submit "Запостить"

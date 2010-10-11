@@ -33,7 +33,7 @@ module Traits::Controller
         end
 
         def self.resource_key
-          @resource_key ||= resource_class.primary_key.to_sym
+          @resource_key ||= resource_class.key.first.name
         end
 
         def resources=(new_value)
@@ -75,7 +75,7 @@ module Traits::Controller
     end
 
     def resource_scope
-      resource_class.scoped
+      resource_class
     end
 
     def new_resource_attributes
@@ -95,7 +95,7 @@ module Traits::Controller
     end
 
     def fetch_resource(options = {})
-      resource_scope.where(fetch_resource_options.merge(resource_key => params[:id]).merge(options)).first
+      resource_scope.first(fetch_resource_options.merge(resource_key => params[:id]).merge(options))
     end
 
     def fetch_resource_options
@@ -115,7 +115,7 @@ module Traits::Controller
     end
 
     def fetch_resources(options = {})
-      resource_scope.where((fetch_resources_options.merge(options))).all
+      resource_scope.all(fetch_resources_options.merge(options))
     end
 
     def fetch_resources_options
@@ -127,7 +127,11 @@ module Traits::Controller
     end
 
     def not_found!
-      super if defined?(super)
+      if defined?(super)
+        super
+      else
+        raise(DataMapper::ObjectNotFoundError)
+      end
     end
   end
 end

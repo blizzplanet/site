@@ -7,12 +7,17 @@ module Authentication
         include ModelInstanceMethods
 
         # Virtual attribute for the unencrypted password
-        attr_accessor :password
+        attr_accessor :password, :password_confirmation
+
+        property :crypted_password, String, :length => 40
+        property :salt,  String, :length => 40
+
+
         validates_presence_of     :password,                   :if => :password_required?
         validates_presence_of     :password_confirmation,      :if => :password_required?
         validates_confirmation_of :password,                   :if => :password_required?
         validates_length_of       :password, :within => 6..40, :if => :password_required?
-        before_save :encrypt_password
+        before :save, :encrypt_password
       end
     end # #included directives
 
@@ -34,6 +39,12 @@ module Authentication
         end
         digest
       end
+
+      def authenticate(login, password)
+        return nil if login.blank? || password.blank?
+        u = first(:login => login.downcase) # need to get the salt
+        u && u.authenticated?(password) ? u : nil
+      end
     end # class methods
 
     #
@@ -53,7 +64,7 @@ module Authentication
       # before filter
       def encrypt_password
         return if password.blank?
-        self.salt = self.class.make_token if new_record?
+        self.salt = self.class.make_token if new?
         self.crypted_password = encrypt(password)
       end
       def password_required?

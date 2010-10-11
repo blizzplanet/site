@@ -1,9 +1,10 @@
 require File.expand_path('../boot', __FILE__)
 
-require "rails"
 require "action_controller/railtie"
+require 'dm-rails/railtie'
 require "action_mailer/railtie"
-require "active_record/railtie"
+require 'haml'
+require 'yaml'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -43,10 +44,11 @@ module Bru
     config.filter_parameters += [:password, :password_confirmation]
 
     config.cache_store = :mem_cache_store
-
     config.generators do |g|
+      g.orm :data_mapper
       g.template_engine :haml
-      g.test_framework :rspec, :fixture => true, :views => false
+      g.test_framework :rspec, :fixture => false, :views => false
+      g.integration_tool :rspec
     end
   end
 end
