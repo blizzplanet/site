@@ -2,5 +2,5 @@
 = render :partial => "articles/listing/article",  :locals => {:article => @article}
 = cache [@article, :comments] do
   %h2 Комментарии
-  = render :partial => "comments/listing/comments", :locals => {:comments => @comments}
-= render :partial => "comments/form", :locals => {:comment => @article.comments.new, :article => @article}
+  = render :partial => "comments/listing/comments", :locals => {:comments => @article.comments}
+= render :partial => "comments/form", :locals => {:comment => @comment, :article => @article}

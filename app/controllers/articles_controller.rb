@@ -15,6 +15,7 @@ class ArticlesController < ApplicationController
   def show
     @category = @article.category
     @comments = @article.comments
+    @comment  = @article.comments.new
   end
 
 protected

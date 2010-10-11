@@ -1,5 +1,5 @@
-= cache [article, :body] do
-  .article
+.article
+  = cache [article, :body] do
     .header
       %div{:class => "icon #{article.icon}"}
       .date
@@ -10,7 +10,8 @@
       .clear
     .content
       = raw article.body
-    .footer
+  .footer
+    = cache [article, :author] do
       .author
         by
         - if article.author
@@ -18,10 +19,10 @@
         - else
           Аноним
 
-      .menu
-        %a{:href => edit_article_path(article)} Редактировать
-        = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
+    .menu
+      %a{:href => edit_article_path(article)} Редактировать
+      = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
 
-    %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}
-    .clear
-  .separator
+  %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}
+  .clear
+.separator

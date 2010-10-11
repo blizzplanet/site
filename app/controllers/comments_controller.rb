@@ -16,7 +16,7 @@ protected
   end
 
   def find_article!
-    @article = Article.find(params[:article_id])
+    @article = Article.first(:id => params[:article_id].to_i)
     @article || not_found!
   end
 
@@ -28,8 +28,8 @@ protected
     @article.comments
   end
 
-  def responde_on_unsuccessful_create
-    render :new, :status => :bad_request
+  def respond_on_unsuccessful_create
+    render "articles/show", :status => :bad_request
   end
 
   def successful_create_url
