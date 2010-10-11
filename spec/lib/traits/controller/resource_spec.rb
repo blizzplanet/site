@@ -110,6 +110,7 @@ describe TestResourcesController do
 
   context "#fetch_resource" do
     let(:resource) { TestResource.create(:field => "wtf") }
+    let(:other_resource) { TestResource.create(:field => "wtf") }    
     it "should use id from params hash to find a resource" do
       subject.stub!(:params).and_return(:id => resource.key_id)
       subject.send(:fetch_resource).should == resource
@@ -119,6 +120,12 @@ describe TestResourcesController do
       subject.stub!(:resource_key).and_return(:field)
       subject.stub!(:params).and_return(:id => resource.field)
       subject.send(:fetch_resource).should == resource
+    end
+
+    it "should respect #parse_resource_key" do
+      subject.stub!(:parse_resource_key).and_return(other_resource.key_id)
+      subject.stub!(:params).and_return(:id => resource.key_id)
+      subject.send(:fetch_resource).should == other_resource
     end
 
     it "should not raise an error if not found and using non-banged version" do

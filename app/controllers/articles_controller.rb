@@ -18,10 +18,9 @@ class ArticlesController < ApplicationController
   end
 
 protected
-   
-   def resource_key
-     :slug
-   end
+  def parse_resource_key(key)
+    key.to_i
+  end  
 
   def assign_author
     @article.author = current_person

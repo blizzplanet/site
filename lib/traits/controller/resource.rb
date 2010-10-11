@@ -93,9 +93,13 @@ module Traits::Controller
     def update_resource
       self.resource.attributes = new_resource_attributes
     end
+    
+    def parse_resource_key(key)
+      key
+    end
 
     def fetch_resource(options = {})
-      resource_scope.first(fetch_resource_options.merge(resource_key => params[:id]).merge(options))
+      resource_scope.first(fetch_resource_options.merge(resource_key => parse_resource_key(params[:id])).merge(options))
     end
 
     def fetch_resource_options

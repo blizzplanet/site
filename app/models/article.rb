@@ -70,7 +70,6 @@ class Article < BaseModel
   end
 
   def to_param
-    # "#{id}--#{slug}"
-    slug
+    "#{id}--#{slug}"
   end
 end
