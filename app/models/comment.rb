@@ -10,7 +10,7 @@ class Comment < BaseModel
   property :created_at, DateTime
 
   # Associations
-  belongs_to :author, "Person"
+  belongs_to :author, "Person", :required => false
   belongs_to :article
   
   # Validations
