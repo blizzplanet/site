@@ -7,7 +7,11 @@ class Person < BaseModel
   include ::Authentication
   include ::Authentication::ByPassword
   include ::Authentication::ByCookieToken
-
+  # Access control
+  include ::Traits::Model::AccessControl::Groups::Admin
+  include ::Traits::Model::AccessControl::Groups::Moderator
+  include ::Traits::Model::AccessControl::Groups::Newsmaker
+  
   # Properties
   property :id,    Serial
   property :login, String, :length => 3..40,  :index => true

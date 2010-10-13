@@ -1,10 +1,12 @@
-= cache [:widget, :recent_articles], :expires_in => 30.seconds do
+= cache [Article, :widget, :recent_articles, current_person], :expires_in => 30.seconds do
   .item.articles
     %h4 Свежие статьи
-    - Article.recent.each do |article|
+    - Article.viewable_by(current_person).all(:limit => 5, :order => :id.desc).each do |article|
       .article
         .header          
           %div{:class => "icon #{article.icon}"}
+          - if !article.approved?
+            %div{:class => "icon pending"}
           %a{:href => article_path(article)} #{article.title}
         .clear
         %p #{article.extract}

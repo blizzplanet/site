@@ -247,6 +247,8 @@ a
           background: url("#{$static}/icons/news/bnet_2.gif") no-repeat
         &.wow
           background: url("#{$static}/icons/news/wow_2.gif") no-repeat  
+        &.pending
+          background: url("#{$static}/icons/news/pending.png") no-repeat  
       .date
         float: right
         background-color: #1a8eff
@@ -320,16 +322,21 @@ a
     .comment
       padding: 10px 5px
       border-bottom: 1px solid #1f3034
-      blockquote
-        padding-left: 15px
-        font-style: italic
-        color: #AAA
-      table
-        border-collapse: collapse
-        background: #9bffff * 0.1
-        th, td
-          padding: 3px
-          border: 1px solid #9bffff * 0.15  
+      .body
+        overflow: auto
+        img
+          max-width: 90%
+          border: 1px solid #1f3034 + #111
+        blockquote
+          padding-left: 15px
+          font-style: italic
+          color: #AAA
+        table
+          border-collapse: collapse
+          background: #9bffff * 0.1
+          th, td
+            padding: 3px
+            border: 1px solid #9bffff * 0.15  
       .author
         text-align: right
 #right
@@ -403,6 +410,10 @@ a
             background-image: url("#{$static}/icons/news/small/blizz.gif")
           &.bnet
             background-image: url("#{$static}/icons/news/small/blizz.gif")
+          &.pending
+            width: 14px
+            background-image: url("#{$static}/icons/news/small/pending.png")
+            
         .header
           a
             display: inline

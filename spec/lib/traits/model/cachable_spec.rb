@@ -17,7 +17,7 @@ end
 
 
 describe Traits::Model::Cachable do
-  context "#cache_key" do
+  describe "#cache_key" do
     subject { CachableModel.new(:name => "hello, world", :version => 42) }
     it "should include model class name" do
       subject.cache_key.should include(subject.class.name.to_s)
@@ -50,6 +50,32 @@ describe Traits::Model::Cachable do
     end
   end
 
+  describe ".class_cache" do
+    it "should create ClassCache model when it doesn't exist" do
+      ClassCache.destroy
+      cc = CachableModel.class_cache
+      cc.should be_a(ClassCache)  
+      cc.should_not be_new
+    end
+    
+    it "should set name to class name" do
+      CachableModel.class_cache.class_name.should == "CachableModel"
+    end
+  end
+
+  describe ".cache_key" do
+    it "should include class name" do
+      CachableModel.cache_key.should include("CachableModel")
+    end
+    
+    it "should include .class_cache version" do
+      cc = CachableModel.class_cache
+      cc.version = 123
+      cc.save
+      CachableModel.cache_key.should include("123")
+    end
+  end
+
   context "callbacks" do
     subject { CachableModel.new }
     it "should increment versions upon saving" do
@@ -57,6 +83,15 @@ describe Traits::Model::Cachable do
         subject.name = "Puto Hey"
         subject.save
       }.should change(subject, :version).by(1)
+    end
+    
+    it "should increment class version upon saving" do
+      cc = subject.class.class_cache
+      lambda {
+        subject.name = "Puto Hey"
+        subject.save
+        cc.reload
+      }.should change(cc, :version).by(1)
     end
   end
 end

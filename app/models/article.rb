@@ -2,6 +2,13 @@ class Article < BaseModel
   # Traits / Modules
   include ::Traits::Model::Sluggable
   include ::Traits::Model::TextProcessing::Markdown
+  
+  include ::Traits::Model::AccessControl::Approvable
+  include ::Traits::Model::AccessControl::Viewable
+  include ::Traits::Model::AccessControl::Approved::ViewableByAll
+  include ::Traits::Model::AccessControl::Pending::ApprovableByNewsmakers
+  include ::Traits::Model::AccessControl::Pending::ViewableByNewsmakers
+  
   # Properties
   property :id,            Serial
   property :body_raw,      Text

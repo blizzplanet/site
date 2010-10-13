@@ -39,7 +39,6 @@ module ActiveSupport
       #
       def remove_unloadable_constants!(*)
         result = super
-        p "OLOLO"
         [Category, Person, Article, Comment] # forcing to reload
 
         DataMapper.finalize

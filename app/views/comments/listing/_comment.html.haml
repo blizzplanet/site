@@ -1,5 +1,6 @@
 %li.comment
-  = raw comment.body
+  .body
+    = raw comment.body
   .author
     &mdash;
     = comment.author ? comment.author.display_name : "Аноним"

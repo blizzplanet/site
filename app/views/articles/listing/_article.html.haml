@@ -2,6 +2,8 @@
   = cache [article, :body] do
     .header
       %div{:class => "icon #{article.icon}"}
+      - if !article.approved?
+        %div{:class => "icon pending"}
       .date
         .number= article.created_at.day
         .month= I18n.t("months.genetive.#{article.created_at.month}")
@@ -20,7 +22,11 @@
           Аноним
 
     .menu
-      %a{:href => edit_article_path(article)} Редактировать
+      = link_to "Редактировать", edit_article_path(article)
+      - if article.pending?
+        = link_to "Одобрить", approve_article_path(article), :method => :put
+      - else
+        = link_to "Отклонить", unapprove_article_path(article), :method => :put
       = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
 
   %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}

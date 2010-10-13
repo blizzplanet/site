@@ -1,6 +1,5 @@
 class CategoriesController< ApplicationController
   include ::Traits::Controller::Resource
-  before_filter :find_resources, :only => [:index]
   before_filter :find_resource!, :only => [:show]
 
   def index
@@ -8,6 +7,7 @@ class CategoriesController< ApplicationController
   end
 
   def show
+    @articles = Article.viewable_by(current_person).all(:category => @category.self_and_descendants, :order => :id.desc)
   end
 
 protected

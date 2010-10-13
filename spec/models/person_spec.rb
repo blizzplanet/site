@@ -67,5 +67,4 @@ describe Person do
       subject.display_name.should == "doe"
     end
   end
-
 end

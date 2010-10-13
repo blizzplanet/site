@@ -3,6 +3,10 @@ Bru::Application.routes.draw do
   resources :categories, :only => [:index, :show]
   resources :articles do
     resources :comments, :only => [:create, :update, :destroy]
+    member do
+      put :approve
+      put :unapprove
+    end
   end
 
   get 'signup' => 'people#new', :as => :signup

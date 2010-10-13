@@ -166,7 +166,7 @@ module AuthenticatedSystem
       @current_person.forget_me if @current_person.is_a? Person
       @current_person = false     # not logged in, and don't do it for me
       kill_remember_cookie!     # Kill client-side auth cookie
-      kill_facebook_cookie!
+      #kill_facebook_cookie!
       session[:person_id] = nil   # keeps the session but kill our variable
       # explicitly kill any other session variables you set
     end
