@@ -24,7 +24,7 @@ describe ::Traits::Model::AccessControl::Pending::ViewableByNewsmakers do
           subject.should be_viewable_by(person)
         end
         
-        it "should not be included in viewable scope" do
+        it "should be included in viewable scope" do
           described_class.viewable_by(person).should include(subject)
         end
       end

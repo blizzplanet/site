@@ -1,3 +1,4 @@
+# encoding: utf-8
 class ArticlesController < ApplicationController
   include ::Traits::Controller::Resource
   include ::Traits::Controller::Action::Create
@@ -6,6 +7,7 @@ class ArticlesController < ApplicationController
   before_filter :build_resource, :only => [:new, :create]
   before_filter :assign_author,  :only => [:new, :create]
   before_filter :find_resource!, :only => [:show, :edit, :update, :destroy, :approve, :unapprove]
+  before_filter :check_creatability, :only => [:new, :create]
   before_filter :check_approvability, :only => [:approve, :unapprove]
 
   def index
@@ -40,8 +42,24 @@ protected
   def assign_author
     @article.author = current_person
   end
+
+  def check_creatability
+    Article.creatable_by?(current_person) || bad_request!
+  end
   
   def check_approvability
     @article.approvable_by?(current_person) || bad_request!
+  end
+  
+  def respond_on_successful_update
+    redirect_to @article, :notice => "Статья была успешно изменена"
+  end
+  
+  def respond_on_successful_create
+    if @article.viewable_by?(current_person)
+      redirect_to @article, :notice => "Статья была успешно создана"
+    else
+      redirect_to category_path(Category.root), :notice => "Статья была создана, дождитесь ее одобрения ньюсмейкерами"
+    end
   end
 end

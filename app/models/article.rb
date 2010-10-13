@@ -5,7 +5,11 @@ class Article < BaseModel
   
   include ::Traits::Model::AccessControl::Approvable
   include ::Traits::Model::AccessControl::Viewable
+  include ::Traits::Model::AccessControl::Creatable
+  
+  include ::Traits::Model::AccessControl::CreatableByPeople
   include ::Traits::Model::AccessControl::Approved::ViewableByAll
+  include ::Traits::Model::AccessControl::Pending::ViewableByAuthor
   include ::Traits::Model::AccessControl::Pending::ApprovableByNewsmakers
   include ::Traits::Model::AccessControl::Pending::ViewableByNewsmakers
   
@@ -23,7 +27,7 @@ class Article < BaseModel
   # Assocations
   belongs_to :category,                   :required => false
   belongs_to :author, "Person",           :required => false
-  has n, :comments
+  has n, :comments, :constraint => :destroy
   # Validations
   validates_presence_of :title
   validates_presence_of :body_raw

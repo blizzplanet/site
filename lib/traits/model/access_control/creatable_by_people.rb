@@ -1,11 +1,11 @@
-module ::Traits::Model::AccessControl::Creatable
+module ::Traits::Model::AccessControl::CreatableByPeople
   def self.included(base)
     base.extend ClassMethods
   end
   
   module ClassMethods
     def creatable_by?(person)
-      false
+      !person.nil? || super
     end
   end
 end
