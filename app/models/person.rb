@@ -8,8 +8,9 @@ class Person < BaseModel
   include ::Authentication::ByPassword
   include ::Authentication::ByCookieToken
   # Access control
+  include ::Traits::Model::AccessControl::Groups
   include ::Traits::Model::AccessControl::Groups::Admin
-  include ::Traits::Model::AccessControl::Groups::Moderator
+  include ::Traits::Model::AccessControl::Groups::Moderator  
   include ::Traits::Model::AccessControl::Groups::Newsmaker
   
   # Properties
@@ -29,5 +30,11 @@ class Person < BaseModel
   def display_name
     name.blank? ? login : "#{name} (#{login})"
   end
+
+  def groups
+    super + [:person]
+  end
+
+
 
 end

@@ -6,7 +6,7 @@ class TestModelViewableByAuthor < BaseModel
   include ::Traits::Model::AccessControl::Pending::ViewableByAuthor
   
   property :id, Serial
-  belongs_to :author, "Person"
+  belongs_to :author, "Person", :required => false
 end
 
 DataMapper.auto_migrate!
@@ -76,13 +76,13 @@ describe ::Traits::Model::AccessControl::Pending::ViewableByAuthor do
 
   context "for nil author" do
     let(:author) { nil }
-    let(:person) { nil }
+    let(:person) { subject.author } # nil
     it "should not be viewable" do
       subject.should_not be_viewable_by(person)
     end
     
     it "should not be included in viewable scope" do
-      described_class.viewable_by(person).should_not include(person)
+      described_class.viewable_by(person).should_not include(subject)
     end
   end
   

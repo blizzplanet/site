@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-class TestModel < BaseModel
+class TestModelGroupsNewsmaker < BaseModel
+  include ::Traits::Model::AccessControl::Groups
   include ::Traits::Model::AccessControl::Groups::Newsmaker
 
   property :id, Serial
@@ -9,7 +10,7 @@ end
 DataMapper.auto_migrate!
 
 describe ::Traits::Model::AccessControl::Groups::Newsmaker do
-  subject { TestModel.new }
+  subject { TestModelGroupsNewsmaker.new }
   let(:described_class) { subject.class }
   
   it "should have :newsmaker property with false default" do
@@ -27,4 +28,21 @@ describe ::Traits::Model::AccessControl::Groups::Newsmaker do
       subject.should_not be_newsmaker
     end
   end
+  
+  
+  describe "#groups" do
+    context "for newsmaker" do
+      before(:each) { subject.newsmaker = true }
+      it "should include :newsmaker" do
+        subject.groups.should include(:newsmaker)
+      end
+    end
+    
+    context "for non-newsmaker" do
+      it "should not include :newsmaker" do
+        subject.groups.should_not include(:newsmaker)
+      end
+    end
+  end
+  
 end

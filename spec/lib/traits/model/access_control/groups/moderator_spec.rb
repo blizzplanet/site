@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 class TestModel < BaseModel
+  include ::Traits::Model::AccessControl::Groups
   include ::Traits::Model::AccessControl::Groups::Moderator
 
   property :id, Serial
@@ -25,6 +26,21 @@ describe ::Traits::Model::AccessControl::Groups::Moderator do
     it "should return false when person is not a moderator" do
       subject.moderator = false
       subject.should_not be_moderator
+    end
+  end
+  
+  describe "#groups" do
+    context "for moderator" do
+      before(:each) { subject.moderator = true }
+      it "should include :moderator" do
+        subject.groups.should include(:moderator)
+      end
+    end
+    
+    context "for non-moderator" do
+      it "should not include :moderator" do
+        subject.groups.should_not include(:moderator)
+      end
     end
   end
 end

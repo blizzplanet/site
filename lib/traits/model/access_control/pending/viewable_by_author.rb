@@ -9,7 +9,11 @@ module ::Traits::Model::AccessControl::Pending::ViewableByAuthor
   
   module ClassMethods
     def viewable_by(person)
-      all(:approved => false, :author => person) | super
+      if person
+        all(:approved => false, :author => person) | super
+      else
+        super
+      end
     end    
   end
 end

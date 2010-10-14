@@ -4,4 +4,9 @@ module ::Traits::Model::AccessControl::Groups::Admin
       property :admin, ::DataMapper::Property::Boolean, :default => false
     end
   end
+  
+  
+  def groups
+    super + (self.admin? ? [:admin] : [])
+  end
 end

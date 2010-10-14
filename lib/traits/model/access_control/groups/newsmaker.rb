@@ -4,4 +4,8 @@ module ::Traits::Model::AccessControl::Groups::Newsmaker
       property :newsmaker, ::DataMapper::Property::Boolean, :default => false
     end
   end
+  
+  def groups
+    super + (self.newsmaker? ? [:newsmaker] : [])
+  end  
 end

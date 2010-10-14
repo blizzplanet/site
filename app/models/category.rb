@@ -7,7 +7,7 @@ class Category < BaseModel
   property :title,     String
   property :base_slug, String
   property :slug,      String, :index => true
-  
+  property :version,   Integer, :default => 0
   # Associations
   has n, :articles
 
@@ -23,6 +23,10 @@ class Category < BaseModel
   def self.games
     titles = ["Starcraft 1", "Starcraft 2", "Diablo 2", "Diablo 3", "Warcraft 3", "World of Warcraft"]
     Category.all(:title => titles)
+  end
+
+  def self.drop_caches
+    Category.each {|c| c.increment_version; c.save }
   end
 
   # Instance methods

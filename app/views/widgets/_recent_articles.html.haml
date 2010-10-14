@@ -1,4 +1,4 @@
-= cache [Article, :widget, :recent_articles, current_person], :expires_in => 30.seconds do
+= cache [Article, :widget, :recent_articles, :groups, current_person.groups], :expires_in => 30.seconds do
   .item.articles
     %h4 Свежие статьи
     - Article.viewable_by(current_person).all(:limit => 5, :order => :id.desc).each do |article|

@@ -37,7 +37,9 @@ class Article < BaseModel
 
   # Callbacks
   markdown :body_raw => :body
-
+  after :create, :drop_category_caches
+  after :update, :drop_category_caches
+  
   # Class methods
   def self.recent
     all(:order => :created_at.desc, :limit => 5)
@@ -82,5 +84,10 @@ class Article < BaseModel
 
   def to_param
     "#{id}--#{slug}"
+  end
+  
+protected
+  def drop_category_caches
+    Category.drop_caches
   end
 end
