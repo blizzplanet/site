@@ -7,8 +7,10 @@ class ArticlesController < ApplicationController
   before_filter :build_resource, :only => [:new, :create]
   before_filter :assign_author,  :only => [:new, :create]
   before_filter :find_resource!, :only => [:show, :edit, :update, :destroy, :approve, :unapprove]
-  before_filter :check_creatability, :only => [:new, :create]
+  before_filter :check_creatability,  :only => [:new, :create]
   before_filter :check_approvability, :only => [:approve, :unapprove]
+  before_filter :check_editability,   :only => [:edit, :update]
+  before_filter :check_deletability,  :only => [:delete]
 
   def index
     redirect_to category_url(Category.root)
@@ -49,6 +51,14 @@ protected
   
   def check_approvability
     @article.approvable_by?(current_person) || bad_request!
+  end
+
+  def check_editability
+    @article.editable_by?(current_person) || bad_request!
+  end
+  
+  def check_deletability
+    @article.deletable_by?(current_person) || bad_request!
   end
   
   def respond_on_successful_update

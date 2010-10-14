@@ -1,5 +1,5 @@
-.article
-  = cache [article, :body] do
+= cache [article, :groups, current_person == article.author, current_person.groups] do
+  .article  
     .header
       %div{:class => "icon #{article.icon}"}
       - if !article.approved?
@@ -12,24 +12,23 @@
       .clear
     .content
       = raw article.body
-  .footer
-    = cache [article, :author] do
+    .footer
       .author
         by
         - if article.author
           %a{:href => "#"} #{article.author.display_name}
         - else
           Аноним
+      .menu
+        - if article.editable_by?(current_person)
+          = link_to "Редактировать", edit_article_path(article)
+        - if article.approvable_by?(current_person)
+          - if article.pending?
+            = link_to "Одобрить", approve_article_path(article), :method => :put
+          - else
+            = link_to "Отклонить", unapprove_article_path(article), :method => :put
+        - if article.deletable_by?(current_person)
+          = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
 
-    .menu
-      = link_to "Редактировать", edit_article_path(article)
-      - if article.approvable_by?(current_person)
-        - if article.pending?
-          = link_to "Одобрить", approve_article_path(article), :method => :put
-        - else
-          = link_to "Отклонить", unapprove_article_path(article), :method => :put
-      = link_to "Удалить", article, :method => :delete, :confirm => "Уверены?"
-
-  %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}
-  .clear
-.separator
+      %a.comments{:href => article_path(article)} #{I18n.t(:comments, :count => article.comments.count)}
+      .clear

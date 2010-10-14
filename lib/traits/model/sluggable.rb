@@ -3,8 +3,8 @@ module Traits
     module Sluggable
       def self.included(base)
         base.class_eval do
-          property :base_slug, String, :index => true
-          property :slug, String, :index => true
+          property :base_slug, String, :length => 0..250, :allow_nil => true, :index => true
+          property :slug,      String, :length => 0..250, :allow_nil => true, :index => true
           before_validation :generate_slug
           validates_presence_of :slug
         end

@@ -3,11 +3,18 @@ class Article < BaseModel
   include ::Traits::Model::Sluggable
   include ::Traits::Model::TextProcessing::Markdown
   
-  include ::Traits::Model::AccessControl::Approvable
-  include ::Traits::Model::AccessControl::Viewable
   include ::Traits::Model::AccessControl::Creatable
-  
+  include ::Traits::Model::AccessControl::Viewable
+  include ::Traits::Model::AccessControl::Approvable
+  include ::Traits::Model::AccessControl::Editable
+  include ::Traits::Model::AccessControl::Deletable
+      
   include ::Traits::Model::AccessControl::CreatableByPeople
+  include ::Traits::Model::AccessControl::EditableByAuthor  
+  include ::Traits::Model::AccessControl::EditableByNewsmakers
+  include ::Traits::Model::AccessControl::EditableByModerators  
+  include ::Traits::Model::AccessControl::DeletableByNewsmakers
+  include ::Traits::Model::AccessControl::DeletableByModerators  
   include ::Traits::Model::AccessControl::Approved::ViewableByAll
   include ::Traits::Model::AccessControl::Pending::ViewableByAuthor
   include ::Traits::Model::AccessControl::Pending::ApprovableByNewsmakers
@@ -19,8 +26,6 @@ class Article < BaseModel
   property :body,          Text
   property :short_version, Text
   property :title,         String,  :length => 5..100
-  property :base_slug,     String,  :length => 0..250, :allow_nil => true
-  property :slug,          String,  :length => 0..250, :allow_nil => true, :index => true
   property :version,       Integer, :default => 0
   property :created_at,    DateTime
 
@@ -37,8 +42,7 @@ class Article < BaseModel
 
   # Callbacks
   markdown :body_raw => :body
-  after :create, :drop_category_caches
-  after :update, :drop_category_caches
+  after :save, :drop_category_caches
   
   # Class methods
   def self.recent
