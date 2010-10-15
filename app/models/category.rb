@@ -5,8 +5,6 @@ class Category < BaseModel
   # Properties
   property :id, Serial
   property :title,     String
-  property :base_slug, String
-  property :slug,      String, :index => true
   property :version,   Integer, :default => 0
   # Associations
   has n, :articles

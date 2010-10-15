@@ -42,8 +42,8 @@ class Article < BaseModel
 
   # Callbacks
   markdown :body_raw => :body
-  after :save, :drop_category_caches
-  
+  after :save,    :drop_category_caches
+  after :destroy, :drop_category_caches
   # Class methods
   def self.recent
     all(:order => :created_at.desc, :limit => 5)

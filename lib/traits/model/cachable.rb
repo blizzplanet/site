@@ -22,6 +22,11 @@ module Traits
         super if defined?(super)
       end
 
+      def destroy(*)
+        self.class.increment_version
+        super if defined?(super)
+      end
+
       def increment_version
         if respond_to?(:version=)
           self.version = self.version.to_i + 1

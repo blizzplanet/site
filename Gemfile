@@ -10,8 +10,6 @@ gem 'activemodel',   RAILS_VERSION
 gem 'activesupport', RAILS_VERSION
 gem 'actionpack',    RAILS_VERSION
 gem 'actionmailer',  RAILS_VERSION
-gem 'activerecord',  RAILS_VERSION
-
 
 # gem 'arel',          '~> 1.0.1'
 # gem 'mysql2'

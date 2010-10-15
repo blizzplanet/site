@@ -1,20 +1,22 @@
 require 'spec_helper'
 
-class CachableModel < TablelessModel
-  attr_accessor :id, :name, :version, :updated_at, :created_at
+class CachableModel
+  include ::DataMapper::Resource
   include ::Traits::Model::Cachable
-  
-  def version
-    @version ||= 0
-  end
-  
+  property :id, Serial
+  property :version, Integer, :default => 0
+  property :name, String
+  timestamps :at
 end
 
-class LightweightCachableModel < TablelessModel
+class LightweightCachableModel
+  include ::DataMapper::Resource
   include ::Traits::Model::Cachable
-  attr_accessor :id, :name
+  property :id, Serial
+  property :name, String
 end
 
+DataMapper.auto_migrate!
 
 describe Traits::Model::Cachable do
   describe "#cache_key" do
@@ -93,5 +95,15 @@ describe Traits::Model::Cachable do
         cc.reload
       }.should change(cc, :version).by(1)
     end
+    
+    
+    it "should increment class version upon destroying" do
+      cc = subject.class.class_cache
+      lambda {
+        subject.destroy
+        cc.reload
+      }.should change(cc, :version).by(1)
+    end
+    
   end
 end

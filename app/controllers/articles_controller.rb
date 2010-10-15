@@ -12,6 +12,12 @@ class ArticlesController < ApplicationController
   before_filter :check_editability,   :only => [:edit, :update]
   before_filter :check_deletability,  :only => [:delete]
 
+  def new
+  end
+
+  def edit
+  end
+  
   def index
     redirect_to category_url(Category.root)
   end
@@ -31,6 +37,7 @@ class ArticlesController < ApplicationController
     @article.unapprove!
     redirect_to @article
   end
+
 
 protected
   def resource_scope
