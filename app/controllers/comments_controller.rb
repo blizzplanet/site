@@ -5,12 +5,18 @@ class CommentsController < ApplicationController
   include ::Traits::Controller::Action::Destroy
 
   before_filter :find_article!
+  before_filter :check_creatability,  :only => [:create]  
   before_filter :build_resource, :only => [:create]
   before_filter :assign_author,  :only => [:create]
   before_filter :assign_article, :only => [:create]
   before_filter :find_resource!, :only => [:update, :destroy]
 
 protected
+
+  def check_creatability
+    Comment.creatable_by?(current_person) || bad_request!
+  end
+
   def assign_author
     @comment.author = current_person
   end

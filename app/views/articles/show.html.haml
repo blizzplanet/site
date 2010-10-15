@@ -3,4 +3,8 @@
 = cache [@article, :comments] do
   %h2 Комментарии
   = render :partial => "comments/listing/comments", :locals => {:comments => @article.comments}
-= render :partial => "comments/form", :locals => {:comment => @comment, :article => @article}
+- if Comment.creatable_by?(current_person)
+  = render :partial => "comments/form", :locals => {:comment => Comment.new, :article => @article}
+- else
+  .comments_form
+    К сожалению, только зарегистрированные пользователи могут оставлять комментарии.

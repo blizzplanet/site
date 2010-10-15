@@ -1,6 +1,18 @@
 class Comment < BaseModel
   # Traits / Modules
   include ::Traits::Model::TextProcessing::Markdown
+
+  include ::Traits::Model::AccessControl::Creatable
+  include ::Traits::Model::AccessControl::Viewable
+  include ::Traits::Model::AccessControl::Editable
+  include ::Traits::Model::AccessControl::Deletable
+      
+  include ::Traits::Model::AccessControl::CreatableByPeople
+  include ::Traits::Model::AccessControl::EditableByAuthor  
+  include ::Traits::Model::AccessControl::EditableByModerators  
+  include ::Traits::Model::AccessControl::DeletableByModerators  
+  include ::Traits::Model::AccessControl::ViewableByAll
+
   
   # Properties
   property :id,         Serial

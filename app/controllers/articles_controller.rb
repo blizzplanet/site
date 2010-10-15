@@ -25,7 +25,6 @@ class ArticlesController < ApplicationController
   def show
     @category = @article.category
     @comments = @article.comments
-    @comment  = Comment.new
   end
   
   def approve
