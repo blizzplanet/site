@@ -3,7 +3,7 @@ require 'yaml'
 yaml = YAML.load(File.read(File.join(File.dirname(File.expand_path(__FILE__)), "seeds.yml")))
 
 def add_category(title, children = nil)
-  category = Category.where(:title => title).first || Category.create(:title => title)
+  category = Category.first_or_create(:title => title)
   case children
     when Hash
       children.each do |other_title, other_children|
