@@ -1,6 +1,7 @@
 .bundle
 db/*.sqlite3
-log/*.log
+log/*
 tmp/**/*
 config/database.yml
 public/stylesheets/*.css
+config/deploy.rb
