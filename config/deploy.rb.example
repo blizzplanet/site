@@ -13,7 +13,7 @@ role :db,  "blizzplanet.ru", :primary => true # This is where Rails migrations w
 set :use_sudo, false
 
 set :user,     "www-site"
-set :password, "SIKRETPASSWORT"
+set :password, "SIKRET PASSWORD"
 
 set :deploy_to, "/www/site/"
 
@@ -22,7 +22,7 @@ namespace :deploy do
   
   desc "Start the application server"
   task :start, :roles => :app do
-    passenger_start_options = "-d -e production -p 3000 --pid-file=/www/site/passenger.pid --log-file=/www/site/log/production.log"
+    passenger_start_options = "-d -e production -p 3000 --pid-file=/www/site/passenger.pid --log-file=/www/site/log/production.log --max-pool-size 1"
     run "cd #{current_release} && passenger start #{passenger_start_options}"
   end
   
@@ -37,22 +37,45 @@ namespace :deploy do
     run "cd #{current_release} && touch tmp/restart.txt"
   end
   
+  desc "Restart previous release"
+  task :restart_previous, :roles => :app do
+    run "cd #{previous_release} && touch tmp/restart.txt"
+  end
+  
+  
   task :migrate, :roles => :db do
     run "cd #{current_release} && RAILS_ENV=production rake db:autoupgrade"
     deploy.restart
   end
-end
+  
+  
+  
+  
+  task :finalize_update, :except => { :no_release => true } do
+    run "chmod -R g+w #{latest_release}" if fetch(:group_writable, true)
 
-after "deploy:update_code" do
-  run "cd #{current_release} && thor setup:symlinks #{shared_path}/system/"
-  # soft restart won't help
-  deploy.stop
-  deploy.start
+    # mkdir -p is making sure that the directories are there for some SCM's that don't
+    # save empty folders
+    run <<-CMD
+      rm -rf #{latest_release}/log #{latest_release}/public/system #{latest_release}/tmp/pids &&
+      mkdir -p #{latest_release}/public &&
+      ln -nfs #{shared_path}/tmp #{release_path}/tmp &&
+      ln -s #{shared_path}/log #{latest_release}/log &&
+      ln -s #{shared_path}/system #{latest_release}/public/system &&
+      ln -s #{shared_path}/pids #{latest_release}/tmp/pids
+    CMD
+
+    if fetch(:normalize_asset_timestamps, true)
+      stamp = Time.now.utc.strftime("%Y%m%d%H%M.%S")
+      asset_paths = fetch(:public_children, %w(images stylesheets javascripts)).map { |p| "#{latest_release}/public/#{p}" }.join(" ")
+      run "find #{asset_paths} -exec touch -t #{stamp} {} ';'; true", :env => { "TZ" => "UTC" }
+    end
+  end
+  
 end
 
 after "deploy:symlink" do
-  run <<-CMD
-    ln -nfs #{shared_path}/system/production #{release_path}/public/production
-  CMD
+  run "ln -nfs #{shared_path}/system/production #{release_path}/public/production"  
+  run "cd #{current_release} && thor setup:symlinks #{shared_path}/system/"
 end
 
