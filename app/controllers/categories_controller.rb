@@ -3,7 +3,9 @@ class CategoriesController< ApplicationController
   before_filter :find_resource!, :only => [:show]
 
   def index
-    redirect_to category_path(Category.root)
+    @category = Category.root
+    show
+    render "show"
   end
 
   def show
