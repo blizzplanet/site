@@ -14,6 +14,7 @@ Bru::Application.routes.draw do
   delete 'signout' => 'sessions#destroy', :as => :logout
   resource :session, :only => [:new, :create, :destroy]
 
-  root :to => "categories#index"
+  # root :to => "categories#index"
+  match "/" => "categories#index", :as => :root
   # match '/activate/:activation_code' => 'people#activate', :as => :activate, :activation_code => nil
 end
