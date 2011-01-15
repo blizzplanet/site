@@ -1,0 +1,58 @@
+require 'bundler/capistrano'
+
+set :application, "Blizzplanet 2.0"
+set :repository,  "git@github.com:blizzplanet/site.git"
+set :branch, "master"
+
+set :scm, :git
+
+role :web, "blizzplanet.ru"                          # Your HTTP server, Apache/etc
+role :app, "blizzplanet.ru"                          # This may be the same as your `Web` server
+role :db,  "blizzplanet.ru", :primary => true # This is where Rails migrations will run
+
+set :use_sudo, false
+
+set :user,     "www-site"
+set :password, "SIKRETPASSWORT"
+
+set :deploy_to, "/www/site/"
+
+
+namespace :deploy do
+  
+  desc "Start the application server"
+  task :start, :roles => :app do
+    passenger_start_options = "-d -e production -p 3000 --pid-file=/www/site/passenger.pid --log-file=/www/site/log/production.log"
+    run "cd #{current_release} && passenger start #{passenger_start_options}"
+  end
+  
+  desc "Stop the application server"
+  task :stop, :roles => :app do
+    passenger_stop_options = "--pid-file=/www/site/passenger.pid"
+    run "cd #{current_release} && passenger stop #{passenger_stop_options}"
+  end
+  
+  desc "Restart the application server"
+  task :restart, :roles => :app do
+    run "cd #{current_release} && touch tmp/restart.txt"
+  end
+  
+  task :migrate, :roles => :db do
+    run "cd #{current_release} && RAILS_ENV=production rake db:autoupgrade"
+    deploy.restart
+  end
+end
+
+after "deploy:update_code" do
+  run "cd #{current_release} && thor setup:symlinks #{shared_path}/system/"
+  # soft restart won't help
+  deploy.stop
+  deploy.start
+end
+
+after "deploy:symlink" do
+  run <<-CMD
+    ln -nfs #{shared_path}/system/production #{release_path}/public/production
+  CMD
+end
+
